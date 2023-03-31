@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.urls",
+    "spotipy",
+    "spotipy.oauth2",
+    "pymongo",
+    "pymongo.mongoengine"
 ]
 
 MIDDLEWARE = [
