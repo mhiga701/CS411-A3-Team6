@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "django.urls",
     "spotipy",
     "spotipy.oauth2",
-    "pymongo",
     
 ]
 
