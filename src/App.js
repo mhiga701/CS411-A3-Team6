@@ -22,7 +22,7 @@ function App() {
         <a
           className="App-link"
           href="http://localhost:3001/login"
-          rel="noopener noreferrer"
+     
         >
           Login with Spotify!
         </a>
