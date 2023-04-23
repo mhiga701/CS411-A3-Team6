@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { accToken } from './spotify';
+import { accessToken, logout } from './spotify';
 
 function App() {
   const [token, setToken] = useState(null);
   useEffect(() => {
-    setToken(accToken);
+    setToken(accessToken);
 
   }, []);
   return (
@@ -20,7 +20,8 @@ function App() {
             className="App-link"
             href="http://localhost:3001/login">Login with Spotify!</a></></>
         ) : (
-          <h1>Login success!</h1>
+          <><h1>Login success!</h1>
+          <button onClick={logout()}>Log Out</button></>
         )}
       </header>
     </div>
