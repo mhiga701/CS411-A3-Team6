@@ -8,3 +8,4 @@ const getAccToken = () => {
 };
 
 export const accToken = getAccToken();
+
