@@ -1,38 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { accToken } from './spotify';
 
 function App() {
+  const [token, setToken] = useState(null);
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const accessToken = urlParams.get('access_token');
-    const refreshToken = urlParams.get('refresh_token');
+    setToken(accToken);
 
-    console.log(accessToken);
-    console.log(refreshToken);
-  
-  if (refreshToken) {
-    fetch(`/refresh_token?refresh_token=${refreshToken}`)
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(err => console.error(err));
-  }
-}, []);
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to Tripmixer!
-        </p>
-        <a
-          className="App-link"
-          href="http://localhost:3001/login"
-     
-        >
-          Login with Spotify!
-        </a>
+        
+        {!token ? (
+          <><img src={logo} className="App-logo" alt="logo" /><><p>
+            Welcome to Tripmixer!
+          </p><a
+            className="App-link"
+            href="http://localhost:3001/login">Login with Spotify!</a></></>
+        ) : (
+          <h1>Login success!</h1>
+        )}
       </header>
     </div>
   );
