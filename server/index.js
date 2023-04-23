@@ -46,8 +46,10 @@ app.get('/login', (req, res) => {
         client_id: CLIENT_ID,
         response_type: 'code',
         redirect_uri: REDIRECT_URI,
+        state: state,
+        scope: scope,
       });
-    res.redirect(`https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}`)
+      res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
     //console.log(process.env.CLIENT_ID);
   });
 
@@ -69,29 +71,16 @@ app.get('/login', (req, res) => {
   })
     .then(response => {
       if (response.status === 200) {
-        const { access_token, token_type } = response.data;
+        const { access_token, refresh_token, expiry } = response.data;
         const queryParams = querystring.stringify({
           access_token,
-          refresh_token
-        });
-
-        res.redirect(`http://localhost:3000/?${queryParams}`);
-
-        axios.get('https://api.spotify.com/v1/me', {
-          headers: {
-            Authorization: `${token_type} ${access_token}`
-          }
+          refresh_token,
+          expiry
         })
-          .then(response => {
-            res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-          })
-          .catch(error => {
-            res.send(error);
-          });
-  
+        res.redirect(`http://localhost:3000/?${queryParams}`);
+   
       } else {
-        res.send(response);
-        res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
+        res.redirect(`/?${querystring.stringify({ error: 'invalid token' })}`);
       }
     })
     .catch(error => {
@@ -122,5 +111,7 @@ app.get('/login', (req, res) => {
         res.send(error);
       });
   });
+
+
 
 

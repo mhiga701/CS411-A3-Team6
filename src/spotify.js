@@ -86,5 +86,5 @@ const getAccessToken = () => {
 
 };
 
-export const accToken = getAccessToken();
+export const accessToken = getAccessToken();
 
