@@ -11,7 +11,14 @@ function App() {
 
     console.log(accessToken);
     console.log(refreshToken);
-  }, []);
+  
+  if (refreshToken) {
+    fetch(`/refresh_token?refresh_token=${refreshToken}`)
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err));
+  }
+}, []);
   return (
     <div className="App">
       <header className="App-header">
