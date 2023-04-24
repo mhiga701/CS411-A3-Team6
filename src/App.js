@@ -1,12 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { accessToken, logout } from './spotify';
+import { accessToken, logout, getProfile } from './spotify';
 
 function App() {
   const [token, setToken] = useState(null);
+  const [profile, setProfile] = useState(null);
   useEffect(() => {
     setToken(accessToken);
+    
+    const fetchData = async () => {
+      try {
+        const { data } = await getProfile();
+        setProfile(data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    fetchData();
 
   }, []);
   return (
@@ -14,16 +25,27 @@ function App() {
       <header className="App-header">
         
         {!token ? (
-          <><img src={logo} className="App-logo" alt="logo" /><><p>
-            Welcome to Tripmixer!
-          </p><a
+         <a
             className="App-link"
-            href="http://localhost:3001/login">Login with Spotify!</a></></>
+            href="http://localhost:3001/login">Login with Spotify!</a>
         ) : (
-          <><h1>Login success!</h1>
-          <button onClick={logout()}>Log Out</button></>
-        )}
-      </header>
+          <>
+          <h1>Login success!</h1>
+          <button onClick={logout}>Log Out</button>
+
+          {profile && (
+            <div>
+            <h1>{profile.display_name}</h1>
+            <p>{profile.followers.total} Followers</p>
+            {profile.images.length && profile.images[0].url &&
+              <img src={profile.images[0].url} alt="Avatar"/>
+            }
+          
+          </div>
+    )}
+    </>
+  )}
+     </header>
     </div>
   );
 }
