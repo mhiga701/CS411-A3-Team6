@@ -23,15 +23,7 @@ const StyledLogoutButton = styled.button`
     right: var(--spacing-lg);
   }
 `;
-//return to the top of the page when routed to new page
-function backToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
 
-  return null;
-}
 
 function App() {
   const [token, setToken] = useState(null);

@@ -1,3 +1,10 @@
+/*NEXT STEPS: 
+Spotfiy does not let you generate playlists by time limit, but by number of tracks
+So, our best bet would be to take the average song length and generate songs up to the length of the trip. 
+There is a limit of 100 songs per generated playlist by the spotify api so any trip time longer will get only a 
+100 song playlist. According to googled spotify data, the average song length is 3 mins and 17 seconds == 197 seconds. 
+100 of these average length songs give us a playlist time limit of rouhgly 5hours and 30 mins.*/
+
 //server/index.js
 require('dotenv').config();
 const axios = require('axios');
