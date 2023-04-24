@@ -2,6 +2,17 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { accessToken, logout, getProfile } from './spotify';
 import { errCatch } from './utils';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom"
+
+import Artists from './components/artists';
+import Tracks from './components/tracks';
+import Playlists from './components/playlists';
+import Home from './components/home';
 
 
 function App() {
@@ -18,6 +29,7 @@ function App() {
     errCatch(fetchData());
 
   }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -27,21 +39,22 @@ function App() {
             className="App-link"
             href="http://localhost:3001/login">Login with Spotify!</a>
         ) : (
-          <>
-          <h1>Login success!</h1>
-          <button onClick={logout}>Log Out</button>
+          <Router>
+            <Routes>
+              <Route path='/top-artists'  element={<Artists />}>
+              </Route>
 
-          {profile && (
-            <div>
-            <h1>{profile.display_name}</h1>
-            <p>{profile.followers.total} Followers</p>
-            {profile.images.length && profile.images[0].url &&
-              <img src={profile.images[0].url} alt="Avatar"/>
-            }
-          
-          </div>
-    )}
-    </>
+              <Route path='/top-tracks' element={<Tracks />}>
+              </Route>
+
+              <Route path='/playlists/:id' element={<Playlists />}>
+              </Route>
+              <Route path='/playlists' element={<Playlists />}>
+              </Route>
+           <Route path='/' element={<Home />}> 
+        </Route>  
+      </Routes>
+    </Router>
   )}
      </header>
     </div>
