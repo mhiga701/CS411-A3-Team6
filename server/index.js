@@ -71,12 +71,12 @@ app.get('/login', (req, res) => {
   })
     .then(response => {
       if (response.status === 200) {
-        const { access_token, refresh_token, expiry } = response.data;
+        const { access_token, refresh_token, expires_in } = response.data;
         const queryParams = querystring.stringify({
           access_token,
           refresh_token,
-          expiry
-        })
+          expires_in,
+        });
         res.redirect(`http://localhost:3000/?${queryParams}`);
    
       } else {

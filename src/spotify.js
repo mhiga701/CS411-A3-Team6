@@ -1,47 +1,47 @@
 import axios from 'axios';
 
 
-const LOCSTORAGE_K = {
+const LOCALSTORAGE_KEYS = {
     accessToken: 'spotify_access_token',
     refreshToken: 'spotify_refresh_token',
-    expiration: 'spotify_token_expiry',
-    timeLim: 'spotify_token_timestamp',
-}
+    expireTime: 'spotify_token_expire_time',
+    timestamp: 'spotify_token_timestamp',
+  }
 
-const LOCSTORAGE_V = {
-    accessToken: window.localStorage.getItem(LOCSTORAGE_K.accessToken),
-    refreshToken: window.localStorage.getItem(LOCSTORAGE_K.refreshToken),
-    expiration: window.localStorage.getItem(LOCSTORAGE_K.expiration),
-    timeLim: window.localStorage.getItem(LOCSTORAGE_K.timeLim),
-};
+  const LOCALSTORAGE_VALUES = {
+    accessToken: window.localStorage.getItem(LOCALSTORAGE_KEYS.accessToken),
+    refreshToken: window.localStorage.getItem(LOCALSTORAGE_KEYS.refreshToken),
+    expireTime: window.localStorage.getItem(LOCALSTORAGE_KEYS.expireTime),
+    timestamp: window.localStorage.getItem(LOCALSTORAGE_KEYS.timestamp),
+  };
 
 export const logout = () => {
-    for (const param in LOCSTORAGE_K) {
-        window.localStorage.removeItem(LOCSTORAGE_K[param]);
+    for (const param in LOCALSTORAGE_KEYS) {
+        window.localStorage.removeItem(LOCALSTORAGE_KEYS[param]);
     }
     window.location = window.location.origin;
 };
 
 const tokenExpired = () => {
-    const { accessToken, timeLim, expiration } = LOCSTORAGE_V;
-    if (!accessToken || !timeLim) {
+    const { accessToken, timestamp, expireTime } = LOCALSTORAGE_VALUES;
+    if (!accessToken || !timestamp) {
         return false;
     }
 
-    const msElapsed = Date.now() - Number(timeLim);
-    return (msElapsed / 1000 > Number(expiration));
+    const msElapsed = Date.now() - Number(timestamp);
+    return (msElapsed / 1000 > Number(expireTime));
 };
 
 const refreshToken = async () => {
     try {
-        if(!LOCSTORAGE_V.refreshToken || LOCSTORAGE_V.refreshToken === 'undefined' || Date.now() - Number(LOCSTORAGE_V.timeLim) / 1000 < 1000) {
+        if(!LOCALSTORAGE_VALUES.refreshToken || LOCALSTORAGE_VALUES.refreshToken === 'undefined' || Date.now() - Number(LOCALSTORAGE_VALUES.timestamp) / 1000 < 1000) {
             console.error('No refresh token available right now.');
             logout();
         }
-        const { data } = await axios.get(`/refresh_token?refresh_token=${LOCSTORAGE_V.refreshToken}`);
+        const { data } = await axios.get(`/refresh_token?refresh_token=${LOCALSTORAGE_VALUES.refreshToken}`);
 
-        window.localStorage.setItem(LOCSTORAGE_K.accessToken, data.access_token);
-        window.localStorage.setItem(LOCSTORAGE_K.timeLim, Date.now());
+        window.localStorage.setItem(LOCALSTORAGE_KEYS.accessToken, data.access_token);
+        window.localStorage.setItem(LOCALSTORAGE_KEYS.timestamp, Date.now());
 
         window.location.reload(); 
     } catch (e) {
@@ -54,37 +54,38 @@ const refreshToken = async () => {
 const getAccessToken = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-
     const queryParams = {
-        [LOCSTORAGE_K.accessToken]: urlParams.get('access_token'),
-        [LOCSTORAGE_K.refreshToken]: urlParams.get('refresh_token'),
-        [LOCSTORAGE_K.expiration]: urlParams.get('expiry'),
+      [LOCALSTORAGE_KEYS.accessToken]: urlParams.get('access_token'),
+      [LOCALSTORAGE_KEYS.refreshToken]: urlParams.get('refresh_token'),
+      [LOCALSTORAGE_KEYS.expireTime]: urlParams.get('expires_in'),
     };
-
     const hasError = urlParams.get('error');
-
-    if (hasError || tokenExpired() || LOCSTORAGE_V.accessToken === 'undefined') {
-        refreshToken();
+  
+    // If there's an error OR the token in localStorage has expired, refresh the token
+    if (hasError || tokenExpired() || LOCALSTORAGE_VALUES.accessToken === 'undefined') {
+      refreshToken();
     }
-
-    if (LOCSTORAGE_V.accessToken && LOCSTORAGE_V.accessToken !== 'undefined') {
-        return LOCSTORAGE_V.accessToken;
+  
+    // If there is a valid access token in localStorage, use that
+    if (LOCALSTORAGE_VALUES.accessToken && LOCALSTORAGE_VALUES.accessToken !== 'undefined') {
+      return LOCALSTORAGE_VALUES.accessToken;
     }
-
-    //first time login by user, no store access token yet but it exists in url
-    if (queryParams[LOCSTORAGE_K]) {
-        for (const param in queryParams) {
-            window.localStorage.setItem(param, queryParams[param]);
-        }
-    //mark the time when access token is intially added to local storage
-    window.localStorage.setItem(LOCSTORAGE_K.timeLim, Date.now());
-
-    return queryParams[LOCSTORAGE_K.accessToken];
+  
+    // If there is a token in the URL query params, user is logging in for the first time
+    if (queryParams[LOCALSTORAGE_KEYS.accessToken]) {
+      // Store the query params in localStorage
+      for (const property in queryParams) {
+        window.localStorage.setItem(property, queryParams[property]);
+      }
+      // Set timestamp
+      window.localStorage.setItem(LOCALSTORAGE_KEYS.timestamp, Date.now());
+      // Return access token from query params
+      return queryParams[LOCALSTORAGE_KEYS.accessToken];
     }
-//else case that shouldn't happen
+  
+    // We should never get here!
     return false;
-
-};
+  };
 
 export const accessToken = getAccessToken();
 
