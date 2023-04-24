@@ -1,60 +1,74 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { accessToken, logout, getProfile } from './spotify';
-import { errCatch } from './utils';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom"
+import { accessToken, logout } from './spotify';
 
-import Artists from './components/artists';
-import Tracks from './components/tracks';
-import Playlists from './components/playlists';
-import Home from './components/home';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import { Login, Profile, Artists, Tracks, Playlists } from './components';
 
+import styled from 'styled-components/macro';
+import GlobalStyle from './styles';
+
+const StyledLoginButton = styled.a`
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  margin: 20px auto;
+  border-radius: 30px;
+  display: inline-block;
+`;
+
+const StyledLogoutButton = styled.button`
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(0,0,0,.7);
+  color: var(--white);
+  font-size: var(--fz-sm);
+  font-weight: 700;
+  border-radius: var(--border-radius-pill);
+  z-index: 10;
+  @media (min-width: 768px) {
+    right: var(--spacing-lg);
+  }
+`;
 
 function App() {
   const [token, setToken] = useState(null);
-  const [profile, setProfile] = useState(null);
+  
   useEffect(() => {
-    setToken(accessToken);
-    
-    const fetchData = async () => {
-        const { data } = await getProfile();
-        setProfile(data);
-    
-    }
-    errCatch(fetchData());
-
+  setToken(accessToken);
   }, []);
 
   return (
     <div className="App">
+      <GlobalStyle />
       <header className="App-header">
         
         {!token ? (
-         <a
-            className="App-link"
-            href="http://localhost:3001/login">Login with Spotify!</a>
+        <Login/>
         ) : (
+          <>
+            <StyledLogoutButton onClick={logout}>Log Out</StyledLogoutButton>
           <Router>
-            <Routes>
-              <Route path='/top-artists'  element={<Artists />}>
-              </Route>
+                <Routes>
+                  <Route path='/top-artists' element={<Artists />}>
+                  </Route>
 
-              <Route path='/top-tracks' element={<Tracks />}>
-              </Route>
+                  <Route path='/top-tracks' element={<Tracks />}>
+                  </Route>
 
-              <Route path='/playlists/:id' element={<Playlists />}>
-              </Route>
-              <Route path='/playlists' element={<Playlists />}>
-              </Route>
-           <Route path='/' element={<Home />}> 
-        </Route>  
-      </Routes>
-    </Router>
+                  <Route path='/playlists/:id' element={<Playlists />}>
+                  </Route>
+                  <Route path='/playlists' element={<Playlists />}>
+                  </Route>
+                  <Route path='/' element={<Profile />}></Route>
+                </Routes>
+                
+              </Router>
+              <button onClick={logout}>Log Out</button>
+
+              </>
   )}
      </header>
     </div>
