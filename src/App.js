@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import { Login, Profile, Artists, Tracks, Playlists } from './components';
 
 import styled from 'styled-components/macro';
-import GlobalStyle from './styles';
+import GlobalStyle from './styles/GlobalStyle';
 
 const StyledLoginButton = styled.a`
   background-color: green;
@@ -66,7 +66,7 @@ function App() {
                 </Routes>
                 
               </Router>
-              <button onClick={logout}>Log Out</button>
+             
 
               </>
   )}
