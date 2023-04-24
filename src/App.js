@@ -2,20 +2,11 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { accessToken, logout } from './spotify';
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom"
 import { Login, Profile, Artists, Tracks, Playlists } from './components';
 
 import styled from 'styled-components/macro';
 import GlobalStyle from './styles/GlobalStyle';
-
-const StyledLoginButton = styled.a`
-  background-color: green;
-  color: white;
-  padding: 10px 20px;
-  margin: 20px auto;
-  border-radius: 30px;
-  display: inline-block;
-`;
 
 const StyledLogoutButton = styled.button`
   position: absolute;
@@ -32,6 +23,15 @@ const StyledLogoutButton = styled.button`
     right: var(--spacing-lg);
   }
 `;
+//return to the top of the page when routed to new page
+function backToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [token, setToken] = useState(null);
@@ -51,6 +51,7 @@ function App() {
           <>
             <StyledLogoutButton onClick={logout}>Log Out</StyledLogoutButton>
           <Router>
+            <backToTop />
                 <Routes>
                   <Route path='/top-artists' element={<Artists />}>
                   </Route>

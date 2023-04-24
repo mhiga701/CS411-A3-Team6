@@ -1,13 +1,17 @@
-import { logout, getProfile } from "../spotify";
+import { getProfile, getPlaylists } from "../spotify";
 import { useEffect, useState } from 'react';
 import { errCatch } from "../utils";
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
+    const [playlists, setPlaylists] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
-            const { data } = await getProfile();
-            setProfile(data);
+            const userProfile = await getProfile();
+            setProfile(userProfile.data);
+
+            const userPlaylists = await getPlaylists();
+            setPlaylists(userPlaylists.data);
         
         };
         errCatch(fetchData());
@@ -19,6 +23,7 @@ const Profile = () => {
         <div>
         <h1>{profile.display_name}</h1>
         <p>{profile.followers.total} Followers</p>
+        <p>{profile.playlists.total} Playlists</p>
         {profile.images.length && profile.images[0].url && (
           <img src={profile.images[0].url} alt="Avatar" />
           )}

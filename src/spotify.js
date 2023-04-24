@@ -93,6 +93,9 @@ axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 export const getProfile = () => axios.get('/me');
+export const getPlaylists = (limit = 20) => {
+    return axios.get(`/me/playlists?limit=${limit}`);
+  };
 
 
 
