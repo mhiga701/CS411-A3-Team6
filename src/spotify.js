@@ -98,7 +98,7 @@ export const getPlaylists = (limit = 20) => {
   };
 
 export const getArtists = (time_range = 'short_term') => {
-    return axios.get(`/me/artists?time_range=${time_range}`);
+    return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
 
 

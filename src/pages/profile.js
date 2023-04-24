@@ -1,7 +1,10 @@
 import { getProfile, getPlaylists, getArtists } from "../spotify";
 import { useEffect, useState } from 'react';
 import { errCatch } from "../utils";
-import { StyledHeader } from '../styles/StyledHeader';
+import StyledHeader from '../styles/StyledHeader';
+import  Wrapper from '../components/Wrapper';
+import Grid from '../components/Grid';
+
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -27,6 +30,15 @@ const Profile = () => {
       {profile && (
         <>
           <StyledHeader type="user">
+            {artists && (
+              <main>
+                <Wrapper title="Your Top 10 Artists of the Month" seeAllLink="/top-artists">
+                <Grid artists={artists.items.slice(0, 10)} />
+                </Wrapper>
+              </main>
+            )
+
+            }
             <div className="header__inner">
               {profile.images.length && profile.images[0].url && (
                 <img className="header__img" src={profile.images[0].url} alt="Avatar"/>

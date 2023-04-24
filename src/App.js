@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { accessToken, logout } from './spotify';
 
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom"
-import { Login, Profile, Artists, Tracks, Playlists } from './components';
+import { Login, Profile, Artists, Tracks, Playlists } from './pages';
 
 import styled from 'styled-components/macro';
 import GlobalStyle from './styles/GlobalStyle';
@@ -43,7 +43,7 @@ function App() {
           <>
             <StyledLogoutButton onClick={logout}>Log Out</StyledLogoutButton>
           <Router>
-            <backToTop />
+          
                 <Routes>
                   <Route path='/top-artists' element={<Artists />}>
                   </Route>
