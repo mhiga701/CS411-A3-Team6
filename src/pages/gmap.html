@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap">
+</script>
+
+</head>
+<body>
+    <form>
+        <div class="container">
+            <h1 class="text-center">Map out your Trip!</h1>
+          <form class="form-horizontal">
+            <div class="form-group">
+                <label for="from">From: </label>
+                <input type="text" name="" placeholder="Origin" id="from">
+            </div>
+            <div class="form-group">
+                <label for="to">To: </label>
+                <input type="text" name="" placeholder="Destination" id="to">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-info btn-lg" onclick="getDist()">Send It!</button>
+            </div>
+          </form>  
+        </div>
+    </form>
+</body>
+</html>
