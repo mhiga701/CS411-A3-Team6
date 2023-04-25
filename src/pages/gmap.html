@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+  
     <script async
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6nfjZIZ0iAHPTbyTObjS2cC9IyiR7XT4&libraries=places&callback=initMap">
 </script>
+<script src="gmap.js"></script>
 
 </head>
 <body>
@@ -17,11 +19,11 @@
           <form class="form-horizontal">
             <div class="form-group">
                 <label for="from">From: </label>
-                <input type="text" name="" placeholder="Origin" id="from">
+                <input type="text" class="form-control" name="" placeholder="Origin" id="from">
             </div>
             <div class="form-group">
                 <label for="to">To: </label>
-                <input type="text" name="" placeholder="Destination" id="to">
+                <input type="text" class="form-control" name="" placeholder="Destination" id="to">
             </div>
             <div class="form-group">
                 <button class="btn btn-info btn-lg" onclick="getDist()">Send It!</button>
