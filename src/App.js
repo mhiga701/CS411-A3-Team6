@@ -1,12 +1,12 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { accessToken, logout } from './spotify';
 
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom"
 import { Login, Profile, Artists, Tracks, Playlists } from './pages';
 
 import styled from 'styled-components/macro';
-import GlobalStyle from './styles/GlobalStyle';
+import { GlobalStyle } from './styles';
 
 const StyledLogoutButton = styled.button`
   position: absolute;
@@ -29,7 +29,7 @@ function App() {
   const [token, setToken] = useState(null);
   
   useEffect(() => {
-  setToken(accessToken);
+    setToken(accessToken);
   }, []);
 
   return (
