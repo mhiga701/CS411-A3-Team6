@@ -1,0 +1,16 @@
+Updated Ideas on the Project:
+
+1. Scrap the weather api, 2 apis is enough work as is
+2. The spotify api is successfully working, now just need to implement the maps api to get distance between endpoints
+3. Spotify has an upper limit on the length of playlists that the api can generate (100 tracks in a single playlist)
+    3i. Spotify generates playlists by number of tracks and not time, so we will use the average time of a song in seconds as a way to convert the
+    length of a user's trip into a rough number of tracks that should be in the playlist
+    3ii. The average song length according to 2020 spotify data is 3 min and 17 seconds (197 seconds), giving us a rough upper limit playlist length of 
+    5 and a half hours. We can control the mode of transportation on the maps api, so if we focus on walking distance, that will give higher user satisfaction
+    as far as playlists being long enough for a walk vs. a drive
+    3iii. Maybe we can advertise it as playlists for your hot girl walk? that hits a large market of genz-->millenial ages
+
+4. Must implement the database, use mongo to store user data
+    4i. Main data to store, saved/frequent locations, past playlists, account info
+
+5. If we have time, implement a mood function for spotify music using the api's data on valence, energy, rhythm, etc. (follow MOOD web app for ideas no source code but still useful)
