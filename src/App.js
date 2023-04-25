@@ -56,6 +56,7 @@ function App() {
                   <Route path='/playlists' element={<Playlists />}>
                   </Route>
                   <Route path='/' element={<Profile />}></Route>
+                  <Route path='/gmap.html' element={}></Route>
                 </Routes>
                 
               </Router>
