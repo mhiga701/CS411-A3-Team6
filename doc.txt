@@ -14,3 +14,4 @@ Updated Ideas on the Project:
     4i. Main data to store, saved/frequent locations, past playlists, account info
 
 5. If we have time, implement a mood function for spotify music using the api's data on valence, energy, rhythm, etc. (follow MOOD web app for ideas no source code but still useful)
+6. Use Autocomplete function of the maps api to handle error checking on user input for locations, that should cover all user error because the only other input they have is login as of right now
