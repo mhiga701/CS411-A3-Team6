@@ -1,9 +1,10 @@
 import { getProfile, getPlaylists, getArtists } from "../spotify";
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
 import StyledHeader from '../styles/StyledHeader';
 import  Wrapper from '../components/Wrapper';
 import Grid from '../components/Grid';
+
 
 
 const Profile = () => {

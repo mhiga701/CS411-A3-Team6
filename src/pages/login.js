@@ -1,12 +1,12 @@
 import styled from 'styled-components/macro';
 
 const StyledLoginContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: white;
+  //display: flex;
+  //flex-direction: column;
+  //justify-content: center;
+  //align-items: center;
+  //height: 100vh;
+  //background-color: black;
 `;
 
 const StyledLoginButton = styled.a`
