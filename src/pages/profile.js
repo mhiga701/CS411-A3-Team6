@@ -52,9 +52,10 @@ const Profile = () => {
               </div>
             </div>
           </StyledHeader>
+
           {artists && (
               <main>
-                <SectionWrapper title="Your Top 5 Artists of the Month" >
+                <SectionWrapper title="Your Top 5 Artists of the Month">
                   <ArtistsGrid artists={artists.items.slice(0, 5)} />
                 </SectionWrapper>
               </main>

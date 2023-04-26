@@ -2,15 +2,15 @@ import styled from 'styled-components/macro';
 
 const StyledGrid = styled.ul`
   list-style: none;
- // margin: 0;
-  //padding: 0;
+  margin: 0;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  grid-gap: var(--spacing-md);
+  grid-gap: var(--spacing-sm);
   justify-content: center;
   align-items: center;
   grid-auto-flow: column;
-  width: 100%;
+  width: 130%;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
