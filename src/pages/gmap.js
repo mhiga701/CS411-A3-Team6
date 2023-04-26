@@ -1,9 +1,10 @@
+//set center of map to boston
 var mapOptions = {
     center: {lat: 42.3601, lng: -71.0589},
-    zoom: 10,
+    zoom: 12,
 
 }
-
+//init new map object
 map = new google.maps.Map(document.getElementById('gmap'), mapOptions);
 
 const directionsService = new google.maps.DirectionsService();
@@ -11,13 +12,13 @@ const directionsRenderer = new google.maps.DirectionsRenderer();
 
 directionsRenderer.setMap(map);
 
-
+//calculates the distance between too endpoints
 function getDist() {
 var request = {
     origin: document.getElementById('from').value,
     destination: document.getElementById('to').value,
     travelType: document.getElementById('mode').value,
-    unitType: google.maps.UnitSystem.CUSTOMARY
+    unitType: google.maps.UnitSystem.IMPERIAL
 }
 directionsService.route(request, (result, status) => {
     if (status === google.maps.DirectionsStatus.OK) {
@@ -42,6 +43,7 @@ directionsService.route(request, (result, status) => {
 });
 }
 
+//autocomplete for origin field
 var field1 = document.getElementById('from');
 var auto1 = new google.maps.places.Autocomplete(field1);
 
