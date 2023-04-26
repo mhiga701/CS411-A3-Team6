@@ -1,2 +1,2 @@
-export { default as Grid } from './ArtistsGrid';
-export { default as Wrapper } from './SectionWrapper';
+export { default as ArtistsGrid } from './ArtistsGrid';
+export { default as SectionWrapper } from './SectionWrapper';

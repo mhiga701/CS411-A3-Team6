@@ -1,9 +1,8 @@
 import { createGlobalStyle } from 'styled-components/macro';
 import variables from './variables';
-//import { GlobalStyle, OtherStyledComponent } from './styles';
 
 const GlobalStyle = createGlobalStyle`
-
+ 
   ${variables};
 
   html {
@@ -27,8 +26,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     background-color: var(--black);
     color: var(--white);
-    //font-family: var(--font);
-    //font-size: var(--fz-md);
+    font-family: var(--font);
+    font-size: var(--fz-md);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -119,8 +118,3 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default GlobalStyle;
-
- 
-
-
-

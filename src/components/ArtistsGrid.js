@@ -1,6 +1,6 @@
 import { StyledGrid } from '../styles';
 
-const Grid = ({ artists }) => (
+const ArtistsGrid = ({ artists }) => (
   <>
     {artists && artists.length ? (
       <StyledGrid type="artist">
@@ -24,4 +24,4 @@ const Grid = ({ artists }) => (
   </>
 );
 
-export default Grid;
+export default ArtistsGrid;
