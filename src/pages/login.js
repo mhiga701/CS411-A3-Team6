@@ -26,6 +26,11 @@ const StyledLoginButton = styled.a`
 
 const Login = () => (
   <StyledLoginContainer>
+    <div>
+      <h1 class="title page-title">WELCOME TO TRIPMIXER!</h1>
+      <p>Generate a personalized playlist that is as long as you want with all your favorite artists. Perfect for trips and timed events.</p>
+      <p>Click the button below to get started with TRIPMIXER.</p>
+    </div>
     <StyledLoginButton href="http://localhost:3001/login">
       Log in to Spotify
     </StyledLoginButton>
