@@ -36,6 +36,8 @@ function App() {
     <div className="App">
       <GlobalStyle />
       <header className="App-header">
+      <h1>WELCOME TO TRIPMIXER!</h1>
+      <p>Generate a personalized playlist that is as long as you want with all your favorite artists. Perfect for trips and timed events.</p>
         
         {!token ? (
         <Login/>
