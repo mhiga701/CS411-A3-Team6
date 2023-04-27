@@ -6,13 +6,13 @@ const GlobalStyle = createGlobalStyle`
   ${variables};
 
   html {
-    box-sizing: border-box;
+    //box-sizing: border-box;
   }
 
   *,
   *:before,
   *:after {
-    box-sizing: inherit;
+    //box-sizing: inherit;
   }
 
   body {
@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background-color: var(--black);
+    background-color: black;
     color: var(--white);
     font-family: var(--font);
     font-size: var(--fz-md);
