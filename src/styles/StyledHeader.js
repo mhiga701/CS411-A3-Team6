@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 const StyledHeader = styled.header`
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   position: relative;
   background: linear-gradient(transparent, rgba(0,0,0,0.5));
   background-color: var(--grey);
@@ -55,10 +55,11 @@ const StyledHeader = styled.header`
   }
 
   .header__overline {
+    display: flex;
     text-transform: uppercase;
     font-size: var(--fz-xxs);
     font-weight: 700;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 2px;
   }
 
   h1.header__name {

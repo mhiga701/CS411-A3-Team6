@@ -3,16 +3,15 @@ import styled from 'styled-components/macro';
 const StyledSection = styled.section`
   &:first-of-type {
     .section__inner {
-      padding-top: 0;
+      //padding-top: 0;
     }
   }
 
   .section__inner {
-    width: 100%;
-    max-width: var(--site-max-width);
-    margin: 0 auto;
+    //width: 100%;
+    //max-width: 100%;
     position: relative;
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: 0;
 
     @media (min-width: 768px) {
       padding: var(--spacing-xl) var(--spacing-xxl);
@@ -28,7 +27,7 @@ const StyledSection = styled.section`
 
   .section__heading {
     display: flex;
-    margin: 0;
+    margin: 0px;
     font-size: var(--fz-xxl);
   }
 
@@ -59,6 +58,7 @@ const StyledSection = styled.section`
     font-weight: 700;
     letter-spacing: 0.1em;
     padding-bottom: 2px;
+    padding-left: 0px
   }
 `;
 

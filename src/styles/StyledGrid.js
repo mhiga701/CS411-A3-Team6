@@ -10,7 +10,7 @@ const StyledGrid = styled.ul`
   justify-content: center;
   align-items: center;
   grid-auto-flow: column;
-  width: 130%;
+  width: 150%;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -55,12 +55,12 @@ const StyledGrid = styled.ul`
 
   .grid__item__img {
     position: relative;
-    padding-top: 100%;
+    //padding-top: 100%;
     margin: 0 auto var(--spacing-lg);
 
     img {
-      position: absolute;
-      top: 0;
+      position: relative;
+      //top: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;

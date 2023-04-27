@@ -3,11 +3,6 @@ import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
-// import StyledHeader from '../styles/StyledHeader';
-// import  Wrapper from '../components/SectionWrapper';
-// import Grid from '../components/ArtistsGrid';
-
-
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
