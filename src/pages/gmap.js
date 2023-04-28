@@ -18,7 +18,7 @@ var request = {
     origin: document.getElementById('from').value,
     destination: document.getElementById('to').value,
     travelType: document.getElementById('mode').value,
-    unitType: google.maps.UnitSystem.IMPERIAL
+    unitSystem: google.maps.UnitSystem.IMPERIAL
 }
 directionsService.route(request, (result, status) => {
     if (status === google.maps.DirectionsStatus.OK) {
