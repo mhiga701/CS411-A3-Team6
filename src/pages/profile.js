@@ -3,6 +3,23 @@ import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
+import styled from 'styled-components/macro';
+
+const StyledButton = styled.a`
+  display: inline-block;
+  background-color: var(--green);
+  color: var(--white);
+  border-radius: var(--border-radius-pill);
+  font-weight: 700;
+  font-size: var(--fz-lg);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  margin-bottom: 20px;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    filter: brightness(1.1);
+  }
+`;
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -57,9 +74,7 @@ const Profile = () => {
             )
 
             }
-            <StyledLoginButton href="http://localhost:3000/playlists">
-                Mix your next trip
-            </StyledLoginButton>
+       <StyledButton href="http://localhost:3000/gmap">Mix Your Trip!</StyledButton>
         </>
       )}
     </>
