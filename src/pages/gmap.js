@@ -7,24 +7,69 @@ import {
     IconButton,
     Input,
     Text,
+    Select,
   } from '@chakra-ui/react'
   import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-  import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api'
-  import { useState } from 'react'
+  import { useJsApiLoader, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api'
+  import { useState, useRef } from 'react'
   const center = {lat: 42.3601, lng: -71.0589};
   //const GOOGLE_MAPS = process.env.GOOGLE_MAPS
+  const google = window.google;
   function GoogMap() {
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+        libraries: ['places']
     })
+    const [map, setCenter] = useState( /** @type google.maps.Map */ (null))
+    const [directionsResponse, setDirectionsResponse] = useState(null)
 
-    const [map, setCenter] = useState( /** @type google.maps.Map */ (null));
+    const [distance, setDistance] = useState('')
+    const [duration, setDuration] = useState('')
+
+
+/** @type React.MutableRefObject<HTMLInputElement> */
+    const originRef = useRef();
+
+/** @type React.MutableRefObject<HTMLInputElement> */
+    const destRef = useRef();
+
+/** @type React.MutableRefObject<HTMLInputElement> */
+    const travRef = useRef();
+
+
+
+
 
     if (!isLoaded) {
-        return   //display while loading can change
+        return null; //display while loading can change
     }
+    async function getDist() {
+        if (originRef.current.value === '' || destRef.current.value === '') {
+            return
+        }
+        const directionsService = new google.maps.directionsService();
+        const results = await directionsService.route({
+            origin: originRef.current.value,
+            destination: destRef.current.value,
+            travelMode: travRef.current.value    
+        });
+        setDirectionsResponse(results);
+        setDistance(results.routes[0].legs[0].distance.text);
+        setDuration(results.routes[0].legs[0].duration.value);
+    }
+
+function clearFields() {
+    setDirectionsResponse(null);
+    setDistance('');
+    setDuration('');
+    originRef.current.value = '';
+    destRef.current.value = '';
+    travRef.current.value = '';
+}
     return (
-        
+
+
+
       <Flex
         position='relative'
         flexDirection='column'
@@ -52,16 +97,29 @@ import {
           zIndex='modal'
         >
           <HStack spacing={4}>
-            <Input type='text' placeholder='Origin' />
-            <Input type='text' placeholder='Destination' />
+            <Autocomplete>
+                <Input type='text' placeholder='Origin' ref={originRef}/>
+            </Autocomplete>
+            
+            <Autocomplete>
+                <Input type='text' placeholder='Destination' ref={destRef}/>
+            </Autocomplete>
+            
+            <select id="mode">
+                <option value="DRIVING">Driving</option>
+                <option value="WALKING">Walking</option>
+                <option value="BICYCLING">Biking</option>
+                <option value="TRANSIT">Public Transport</option>
+            </select>
+
             <ButtonGroup>
-              <Button colorScheme='pink' type='submit'>
+              <Button colorScheme='pink' type='submit' onClick={getDist}>
                 Send It!
               </Button>
               <IconButton
                 aria-label='center back'
                 icon={<FaTimes />}
-                onClick={() => alert(123)}
+                onClick={clearFields}
               />
             </ButtonGroup>
           </HStack>
@@ -72,7 +130,7 @@ import {
               aria-label='center back'
               icon={<FaLocationArrow />}
               isRound
-              onClick={() => map.panTo(center)}
+              onClick={map.panTo(center)}
             />
           </HStack>
         </Box>
