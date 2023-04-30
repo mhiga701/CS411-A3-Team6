@@ -57,6 +57,9 @@ const Profile = () => {
             )
 
             }
+            <StyledLoginButton href="http://localhost:3000/playlists">
+                Mix your next trip
+            </StyledLoginButton>
         </>
       )}
     </>
