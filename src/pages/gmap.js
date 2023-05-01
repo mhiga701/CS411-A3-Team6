@@ -6,12 +6,19 @@ import {
     HStack,
     IconButton,
     Input,
+    SkeletonText,
     Text,
-    Select,
   } from '@chakra-ui/react'
   import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-  import { useJsApiLoader, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api'
-  import { useState, useRef } from 'react'
+  
+  import {
+    useJsApiLoader,
+    GoogleMap,
+    Marker,
+    Autocomplete,
+    DirectionsRenderer,
+  } from '@react-google-maps/api'
+  import { useRef, useState } from 'react'
 
   const center = {lat: 42.3601, lng: -71.0589};
   
@@ -23,7 +30,7 @@ import {
         libraries: ['places']
     })
     
-    const [map, setCenter] = useState( /** @type google.maps.Map */ (null))
+    const [map, setMap] = useState( /** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
 
     const [distance, setDistance] = useState('')
@@ -44,13 +51,13 @@ import {
 
 
     if (!isLoaded) {
-        return null; //display while loading can change
+        return <SkeletonText />; //display while loading can change
     }
     async function getDist() {
         if (originRef.current.value === '' || destRef.current.value === '') {
             return
         }
-        const directionsService = new google.maps.directionsService();
+        const directionsService = new google.maps.DirectionsService();
         const results = await directionsService.route({
             origin: originRef.current.value,
             destination: destRef.current.value,
@@ -67,7 +74,6 @@ function clearFields() {
     setDuration('');
     originRef.current.value = '';
     destRef.current.value = '';
-    travRef.current.value = '';
 }
     return (
 
@@ -78,26 +84,32 @@ function clearFields() {
         flexDirection='column'
         alignItems='center'
         bgColor='blue.200'
-        // bgImage='https://images.unsplash.com/photo-1647117181799-0ac3e50a548a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
-        bgPos='bottom'
+        
         h='100vh'
         w='100vw'
       >
-        <Box position='absolute' left={0} top={0} h='100%' w='100%'></Box>
+
+    <Box position='absolute' left={0} top={0} h='100%' w='100%'>
             {/*Box for map */}
-            <GoogleMap center={center} zoom={12} mapContainerStyle={{width: '100%', height:'100%'}}>
+            <GoogleMap center={center} zoom={15} mapContainerStyle={{width: '100%', height:'100%'}}  onLoad={map => setMap(map)}>
                 {/*Display directions and markers on selected locations */}
+               
                 <Marker position={center} />
-                onLoad = {(map => setCenter(map))}
+               {directionsResponse && (
+                <DirectionsRenderer directions={directionsResponse} />
+               )}
             </GoogleMap>
+        </Box>
         <Box
           p={4}
           borderRadius='lg'
-          mt={4}
+          m={4}
           bgColor='white'
           shadow='base'
           minW='container.md'
           zIndex='modal'
+          w='20%'
+          h='15%'
         >
           <HStack spacing={4}>
             <Autocomplete>
@@ -116,7 +128,7 @@ function clearFields() {
             </select>
 
             <ButtonGroup>
-              <Button colorScheme='pink' type='submit' onClick={getDist}>
+              <Button colorScheme='green' type='submit' onClick={getDist}>
                 Send It!
               </Button>
               <IconButton
@@ -127,16 +139,19 @@ function clearFields() {
             </ButtonGroup>
           </HStack>
           <HStack spacing={4} mt={4} justifyContent='space-between'>
-            <Text>Distance: </Text>
-            <Text>Duration: </Text>
+            <Text>Distance: {distance}</Text>
+            <Text>Duration: {duration}</Text>
             <IconButton
               aria-label='center back'
               icon={<FaLocationArrow />}
               isRound
+              onClick={() => map.panTo(center) }
             
             />
           </HStack>
         </Box>
+       
+        
       </Flex>
     )
   }

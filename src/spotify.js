@@ -104,7 +104,7 @@ export const getArtists = (time_range = 'short_term') => {
 
 export function handler(req, res) {
     try {
-    const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=20`;
+    const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
     const makePlaylist = async () => {
         const response = await fetch(ENDPOINT, {
             method: 'POST',
@@ -129,8 +129,14 @@ export function handler(req, res) {
         console.error("Something went wrong while making your playlist.", error);
         return res.status(400);
     }
+    
 
 }
+// export function handler2(req, res) {
+//     try {
+//         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
+// }
+// }
 // export const getRecs = (limit = 50) => {
 //     return axios.get(`/me/recommendations/?seed_artists=`)
 // }
