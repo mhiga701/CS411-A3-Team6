@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 
+//const querystring = require('querystring');
 const LOCALSTORAGE_KEYS = {
     accessToken: 'spotify_access_token',
     refreshToken: 'spotify_refresh_token',
@@ -100,5 +101,38 @@ export const getPlaylists = (limit = 20) => {
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
+
+export function handler(req, res) {
+    try {
+    const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=20`;
+    const makePlaylist = async () => {
+        const response = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                name: 'Your TripMix!',
+                public: 'false',
+                collaborative: 'false',
+                description: 'A playlist for your upcoming trip!'
+
+            }),
+        });
+
+        const resp = await response.json();
+
+      return res.status(200).json(resp);
+    };
+    return makePlaylist();
+    } catch (error) {
+        console.error("Something went wrong while making your playlist.", error);
+        return res.status(400);
+    }
+
+}
+// export const getRecs = (limit = 50) => {
+//     return axios.get(`/me/recommendations/?seed_artists=`)
+// }
 
 

@@ -13,6 +13,7 @@ import {
   import { useJsApiLoader, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api'
   import { useState, useRef } from 'react'
   const center = {lat: 42.3601, lng: -71.0589};
+  
   //const GOOGLE_MAPS = process.env.GOOGLE_MAPS
   const google = window.google;
   function GoogMap() {
@@ -20,6 +21,7 @@ import {
         googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
         libraries: ['places']
     })
+    
     const [map, setCenter] = useState( /** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
 
@@ -130,7 +132,7 @@ function clearFields() {
               aria-label='center back'
               icon={<FaLocationArrow />}
               isRound
-              onClick={map.panTo(center)}
+            
             />
           </HStack>
         </Box>
