@@ -12,13 +12,14 @@ import {
   import { FaLocationArrow, FaTimes } from 'react-icons/fa'
   import { useJsApiLoader, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api'
   import { useState, useRef } from 'react'
+
   const center = {lat: 42.3601, lng: -71.0589};
   
   //const GOOGLE_MAPS = process.env.GOOGLE_MAPS
   const google = window.google;
   function GoogMap() {
     const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: ['places']
     })
     
