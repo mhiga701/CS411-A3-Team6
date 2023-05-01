@@ -1,3 +1,4 @@
+//import { ErrorBoundary } from 'react-error-boundary'
 import {
     Box,
     Button,
@@ -7,7 +8,7 @@ import {
     IconButton,
     Input,
     SkeletonText,
-    Text,
+    Text
   } from '@chakra-ui/react'
   import { FaLocationArrow, FaTimes } from 'react-icons/fa'
   
@@ -51,7 +52,7 @@ import {
 
 
     if (!isLoaded) {
-        return <SkeletonText />; //display while loading can change
+        return SkeletonText ; //display while loading can change
     }
     async function getDist() {
         if (originRef.current.value === '' || destRef.current.value === '') {
@@ -120,7 +121,7 @@ function clearFields() {
                 <Input type='text' placeholder='Destination' ref={destRef}/>
             </Autocomplete>
             
-            <select id="mode">
+            <select id="mode" ref={travRef}>
                 <option value="DRIVING">Driving</option>
                 <option value="WALKING">Walking</option>
                 <option value="BICYCLING">Biking</option>
@@ -128,13 +129,13 @@ function clearFields() {
             </select>
 
             <ButtonGroup>
-              <Button colorScheme='green' type='submit' onClick={getDist}>
+              <Button colorScheme='green' type='submit' onClick={getDist()}>
                 Send It!
               </Button>
               <IconButton
                 aria-label='center back'
                 icon={<FaTimes />}
-                onClick={clearFields}
+                onClick={clearFields()}
               />
             </ButtonGroup>
           </HStack>
@@ -153,6 +154,7 @@ function clearFields() {
        
         
       </Flex>
+ 
     )
   }
   

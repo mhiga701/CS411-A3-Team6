@@ -1,7 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import Gmap from './Gmap'
 import { ChakraProvider, theme } from '@chakra-ui/react'
+import { ErrorBoundary } from 'react-error-boundary'
 
 export { default as Login } from './Login';
 export { default as Profile } from './Profile';
@@ -10,15 +11,16 @@ export { default as Playlists } from './playlists';
 export { default as Tracks } from './tracks';
 export { default as GoogMap } from './Gmap';
 
-
-
-ReactDOM.render(
-  <React.StrictMode>
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <ErrorBoundary fallback={<p>Something went wrong</p>}>
+    <React.StrictMode>
     <ChakraProvider theme={theme}>
       <Gmap />
     </ChakraProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
+  </ErrorBoundary>
+  
 )
 
 

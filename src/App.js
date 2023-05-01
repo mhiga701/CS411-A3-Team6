@@ -2,8 +2,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { accessToken, logout } from './spotify';
 
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom"
-import { Login, Profile, Artists, Tracks, Playlists, gMap, GoogMap } from './pages';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { Login, Profile, Artists, Tracks, Playlists, GoogMap } from './pages';
 
 import styled from 'styled-components/macro';
 import { GlobalStyle } from './styles';
