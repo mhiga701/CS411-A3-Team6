@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { errCatch } from './utils';
+import { Artists } from './pages/Artists'
+
 
 
 //const querystring = require('querystring');
@@ -103,6 +105,9 @@ export const getPlaylists = (limit = 20) => {
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
+export const getRecs = (limit=10) => {
+    return axios.get(`/me/recommendations?limit=${limit}&market=US&seed_artists=${Artists.ids.id1}%${Artists.ids.id2}%${Artists.ids.id3}%${Artists.ids.id4}%${Artists.ids.id5}`);
+}
 
 export const GetArtistIds = () => {
     const [id1, setId1] = useState(null);
@@ -163,31 +168,7 @@ export function handler(req, res) {
 //         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
 // }
 // }
-// export function recom(req, res) {
-//      const ENDPOINT = `https://api.spotify.com/v1/recommendations?limit=2&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD&seed_genres=rap&seed_tracks=6efkcs2aUBMFKxl0cl2JWQ`;
 
-//                   const getRecs = async () => {
-//                         const artistData = await fetch(ENDPOINT, {
-//                             headers: {
-//                                 Authorization: `Bearer ${accessToken}`
-//                             },
-//                         });
-//                     // const { items } = await artistData.json();
-//                     // const tracks = items.map((track) => ({
-//                     //     id: track.id,
-//                     //     name: track.name
-//                     // })); 
-//                     const recs = await artistData.json()
-//                     return res.status(200).json(recs);
-//                     };
-              
-                   
-                    
-//     //const recs = axios.get(`https://api.spotify.com/v1/recommendations?limit=25&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD&seed_genres=rap&seed_tracks=6efkcs2aUBMFKxl0cl2JWQ`);
-//     //let tracks = recs.data;
-//     return getRecs;
-//     }
-   // export default getRecs;
 
 
 

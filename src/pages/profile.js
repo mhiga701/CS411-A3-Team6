@@ -1,4 +1,4 @@
-import { getProfile, getPlaylists, getArtists } from "../spotify";
+import { getProfile, getPlaylists, getArtists, getRecs } from "../spotify";
 import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
@@ -28,11 +28,7 @@ const Profile = () => {
     const [profile, setProfile] = useState(null);
     const [playlists, setPlaylists] = useState(null);
     const [artists, setArtists] = useState(null);
-    const [id1, setId1] = useState(null);
-    const [id2, setId2] = useState(null);
-    const [id3, setId3] = useState(null);
-    const [id4, setId4] = useState(null);
-    const [id5, setId5] = useState(null);
+    const [recs, setRecs] = useState(null);
     
     //const [ids, setIds] = useState(null);
     useEffect(() => {
@@ -45,13 +41,9 @@ const Profile = () => {
 
             const userArtists = await getArtists();
             setArtists(userArtists.data);
-            setId1(userArtists.data.items[0]['id']);
-            setId2(userArtists.data.items[1]['id']);
-            setId3(userArtists.data.items[2]['id']);
-            setId4(userArtists.data.items[3]['id']);
-            setId5(userArtists.data.items[4]['id']);
             
-            
+            const userRecs = await getRecs();
+            setRecs(userRecs.data);
            
         };
         errCatch(fetchData());
@@ -60,8 +52,8 @@ const Profile = () => {
     
     []);
  
-    const ids = {id1, id2, id3, id4, id5}
-    console.log(ids.id1);
+    
+    console.log(recs);
     return (
         <>
       {profile && (
