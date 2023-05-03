@@ -80,7 +80,7 @@ function clearFields() {
       w='100vw'
     >
 
-  <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+      <Box position='absolute' left={0} top={0} h='100%' w='100%'>
           {/*Box for map */}
           <GoogleMap center={center} zoom={15} mapContainerStyle={{width: '100%', height:'100%'}}  onLoad={map => setMap(map)}>
               {/*Display directions and markers on selected locations */}
@@ -92,14 +92,14 @@ function clearFields() {
           </GoogleMap>
       </Box>
       <Box
-        p={4}
-        borderRadius='lg'
-        m={4}
+        position='sticky' 
+        //borderRadius='lg'
+        m={10}
         bgColor='white'
         shadow='base'
-        minW='container.md'
-        zIndex='modal'
-        w='20%'
+        //minW='400px'
+        //zIndex='auto'
+        w='50%'
         h='15%'
       >
         <HStack spacing={4}>
@@ -129,6 +129,7 @@ function clearFields() {
             />
           </ButtonGroup>
         </HStack>
+
         <HStack spacing={4} mt={4} justifyContent='space-between'>
           <Text>Distance: {distance}</Text>
           <Text>Duration: {Math.floor(duration/60)} minutes</Text>
@@ -136,9 +137,7 @@ function clearFields() {
             aria-label='center back'
             icon={<FaLocationArrow />}
             isRound
-            onClick={() => map.panTo(center) }
-          
-          />
+            onClick={() => map.panTo(center) }/>
         </HStack>
       </Box>
     </Flex>
