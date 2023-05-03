@@ -4,7 +4,9 @@ import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
 import styled from 'styled-components/macro';
+import { Link } from "react-router-dom"
 //import { handler } from "../spotify";
+
 
 const StyledButton = styled.a`
   display: inline-block;
@@ -36,11 +38,13 @@ const Profile = () => {
 
             const userArtists = await getArtists();
             setArtists(userArtists.data);
-        
+           
         };
         errCatch(fetchData());
-    }, []);
-    
+        
+    }, 
+    []);
+    console.log(artists)
     return (
         <>
       {profile && (
@@ -76,7 +80,7 @@ const Profile = () => {
             )
 
             }
-       <StyledButton href="http://localhost:3000/gmap">Mix Your Trip!</StyledButton>
+       <Link to="/gmap" ><StyledButton>Mix Your Trip!</StyledButton></Link>
         </>
       )}
      

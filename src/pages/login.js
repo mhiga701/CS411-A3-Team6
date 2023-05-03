@@ -31,7 +31,7 @@ const StyledLoginButton = styled.a`
 const Login = () => (
   <StyledLoginContainer>
     <div>
-      <h1 class="title page-title"><big>WELCOME TO TRIPMIXER!</big></h1>
+      <h1 className="title page-title"><big>WELCOME TO TRIPMIXER!</big></h1>
       <br></br>
       <p>TRIPMIXER is a playlist generator that creates unique Spotify playlists personalized to your travel needs and music taste. You can enter your map details for a perfectly timed playlist with all your favorite artists.</p> 
       <p>Good music until you reach your destination. Perfect for any kind of trip.</p>

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { accessToken, logout } from './spotify';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { Login, Profile, Artists, Tracks, Playlists, GoogMap } from './pages';
+import { Login, Profile, GoogMap } from './pages';
 
 import styled from 'styled-components/macro';
 import { GlobalStyle } from './styles';
@@ -44,16 +44,6 @@ function App() {
           <Router>
           
                 <Routes>
-                  <Route path='/top-artists' element={<Artists />}>
-                  </Route>
-
-                  <Route path='/top-tracks' element={<Tracks />}>
-                  </Route>
-
-                  <Route path='/playlists/:id' element={<Playlists />}>
-                  </Route>
-                  <Route path='/playlists' element={<Playlists />}>
-                  </Route>
                   <Route path='/' element={<Profile />}></Route>
                   <Route path='/gmap' element={<GoogMap />}></Route>
                 </Routes>

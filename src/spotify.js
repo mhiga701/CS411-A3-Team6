@@ -100,6 +100,14 @@ export const getPlaylists = (limit = 20) => {
 
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
+    // const { items } = art.json();
+    // const artists = items.map((artist) => ({
+    //                 genre: artist.genres,
+    //                 pic: artist.images[0].url,
+    //                 name: artist.name,
+    //                 id: artist.id,
+    //             })); 
+    // return artists;
 }
 
 export function handler(req, res) {
@@ -137,8 +145,9 @@ export function handler(req, res) {
 //         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
 // }
 // }
-// export const getRecs = (limit = 50) => {
-//     return axios.get(`/me/recommendations/?seed_artists=`)
-// }
+export const getRecs = (limit = 50) => {
+    return axios.get(`/me/recommendations/?seed_artists=${getArtists('short_term')}`)
+}
+console.log(getRecs);
 
 
