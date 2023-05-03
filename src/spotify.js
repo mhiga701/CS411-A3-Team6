@@ -105,9 +105,9 @@ export const getPlaylists = (limit = 20) => {
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
-export const getRecs = (Ids, limit=10) => {
-    // return axios.get(`/me/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
-    return axios.get(`/me/recommendations?limit=${limit}&market=US&seed_artists=2TLlFL6dpycifLqKtTE7UZ`);
+export const getRecs = (limit=10) => {
+    // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
+    return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
 }
 
 // export const GetArtistIds = () => {
@@ -134,36 +134,36 @@ export const getRecs = (Ids, limit=10) => {
 // return {id1, id2, id3, id4, id5};
 // }
 
-export function handler(req, res) {
-    try {
-    const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
-    const makePlaylist = async () => {
-        const response = await fetch(ENDPOINT, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
-            body: JSON.stringify({
-                name: 'Your TripMix!',
-                public: 'false',
-                collaborative: 'false',
-                description: 'A playlist for your upcoming trip!'
+// export function handler(req, res) {
+//     try {
+//     const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
+//     const makePlaylist = async () => {
+//         const response = await fetch(ENDPOINT, {
+//             method: 'POST',
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`
+//             },
+//             body: JSON.stringify({
+//                 name: 'Your TripMix!',
+//                 public: 'false',
+//                 collaborative: 'false',
+//                 description: 'A playlist for your upcoming trip!'
 
-            }),
-        });
+//             }),
+//         });
 
-        const resp = await response.json();
+//         const resp = await response.json();
 
-      return res.status(200).json(resp);
-    };
-    return makePlaylist();
-    } catch (error) {
-        console.error("Something went wrong while making your playlist.", error);
-        return res.status(400);
-    }
+//       return res.status(200).json(resp);
+//     };
+//     return makePlaylist();
+//     } catch (error) {
+//         console.error("Something went wrong while making your playlist.", error);
+//         return res.status(400);
+//     }
     
 
-}
+// }
 // export function handler2(req, res) {
 //     try {
 //         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;

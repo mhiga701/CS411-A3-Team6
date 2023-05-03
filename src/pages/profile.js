@@ -4,7 +4,7 @@ import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
 import styled from 'styled-components/macro';
-//import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 //import { handler } from "../spotify";
 
 
@@ -53,7 +53,7 @@ const Profile = () => {
     []);
  
     
-    console.log(recs);
+  
     return (
         <>
       {profile && (
@@ -97,7 +97,7 @@ const Profile = () => {
             )
 
             } */}
-       <StyledButton>Mix Your Trip!</StyledButton>
+       <Link to='/gmap'><StyledButton>Mix Your Trip!</StyledButton></Link>
         </>
       )}
      
