@@ -6,7 +6,7 @@
 export { default as Login } from './Login';
 export { default as Profile } from './Profile';
 export { default as GoogMap } from './Gmap';
-export { default as Artists } from './Artists';
+export { default as Ids } from './Artists';
 
 
 // ReactDOM.render(

@@ -1,7 +1,8 @@
 import { getArtists } from "../spotify";
 import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
-const Artists = () => {
+
+export function SetIds() {
     const [id1, setId1] = useState(null);
     const [id2, setId2] = useState(null);
     const [id3, setId3] = useState(null);
@@ -24,4 +25,4 @@ const Artists = () => {
     const ids = {id1, id2, id3, id4, id5}
     return ids;
 }
-export default Artists;
+export default SetIds;

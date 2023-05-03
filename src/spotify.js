@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { errCatch } from './utils';
-import { Artists } from './pages/Artists'
+import { Ids } from './pages/'
 
 
 
@@ -105,33 +105,34 @@ export const getPlaylists = (limit = 20) => {
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
-export const getRecs = (limit=10) => {
-    return axios.get(`/me/recommendations?limit=${limit}&market=US&seed_artists=${Artists.ids.id1}%${Artists.ids.id2}%${Artists.ids.id3}%${Artists.ids.id4}%${Artists.ids.id5}`);
+export const getRecs = (Ids, limit=10) => {
+    // return axios.get(`/me/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
+    return axios.get(`/me/recommendations?limit=${limit}&market=US&seed_artists=2TLlFL6dpycifLqKtTE7UZ`);
 }
 
-export const GetArtistIds = () => {
-    const [id1, setId1] = useState(null);
-    const [id2, setId2] = useState(null);
-    const [id3, setId3] = useState(null);
-    const [id4, setId4] = useState(null);
-    const [id5, setId5] = useState(null);
+// export const GetArtistIds = () => {
+//     const [id1, setId1] = useState(null);
+//     const [id2, setId2] = useState(null);
+//     const [id3, setId3] = useState(null);
+//     const [id4, setId4] = useState(null);
+//     const [id5, setId5] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const userArtists = await getArtists();
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             const userArtists = await getArtists();
             
-            setId1(userArtists.data.items[0]['id']);
-            setId2(userArtists.data.items[1]['id']);
-            setId3(userArtists.data.items[2]['id']);
-            setId4(userArtists.data.items[3]['id']);
-            setId5(userArtists.data.items[4]['id']);
-        }
-        errCatch(fetchData());
-    },
-    []);
+//             setId1(userArtists.data.items[0]['id']);
+//             setId2(userArtists.data.items[1]['id']);
+//             setId3(userArtists.data.items[2]['id']);
+//             setId4(userArtists.data.items[3]['id']);
+//             setId5(userArtists.data.items[4]['id']);
+//         }
+//         errCatch(fetchData());
+//     },
+//     []);
     
-return {id1, id2, id3, id4, id5};
-}
+// return {id1, id2, id3, id4, id5};
+// }
 
 export function handler(req, res) {
     try {
