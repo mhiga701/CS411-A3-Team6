@@ -100,14 +100,6 @@ export const getPlaylists = (limit = 20) => {
 
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
-    // const { items } = art.json();
-    // const artists = items.map((artist) => ({
-    //                 genre: artist.genres,
-    //                 pic: artist.images[0].url,
-    //                 name: artist.name,
-    //                 id: artist.id,
-    //             })); 
-    // return artists;
 }
 
 export function handler(req, res) {
@@ -145,9 +137,33 @@ export function handler(req, res) {
 //         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
 // }
 // }
-export const getRecs = (limit = 50) => {
-    return axios.get(`/me/recommendations/?seed_artists=${getArtists('short_term')}`)
-}
-console.log(getRecs);
+// export function recom(req, res) {
+//      const ENDPOINT = `https://api.spotify.com/v1/recommendations?limit=2&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD&seed_genres=rap&seed_tracks=6efkcs2aUBMFKxl0cl2JWQ`;
+
+//                   const getRecs = async () => {
+//                         const artistData = await fetch(ENDPOINT, {
+//                             headers: {
+//                                 Authorization: `Bearer ${accessToken}`
+//                             },
+//                         });
+//                     // const { items } = await artistData.json();
+//                     // const tracks = items.map((track) => ({
+//                     //     id: track.id,
+//                     //     name: track.name
+//                     // })); 
+//                     const recs = await artistData.json()
+//                     return res.status(200).json(recs);
+//                     };
+              
+                   
+                    
+//     //const recs = axios.get(`https://api.spotify.com/v1/recommendations?limit=25&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD&seed_genres=rap&seed_tracks=6efkcs2aUBMFKxl0cl2JWQ`);
+//     //let tracks = recs.data;
+//     return getRecs;
+//     }
+   // export default getRecs;
+
+
+
 
 

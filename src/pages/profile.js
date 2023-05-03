@@ -4,7 +4,7 @@ import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
 import styled from 'styled-components/macro';
-import { Link } from "react-router-dom"
+//import { Link } from "react-router-dom"
 //import { handler } from "../spotify";
 
 
@@ -28,6 +28,7 @@ const Profile = () => {
     const [profile, setProfile] = useState(null);
     const [playlists, setPlaylists] = useState(null);
     const [artists, setArtists] = useState(null);
+    const [ids, setIds] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             const userProfile = await getProfile();
@@ -38,13 +39,18 @@ const Profile = () => {
 
             const userArtists = await getArtists();
             setArtists(userArtists.data);
+            setIds(userArtists.data.items)
+            
+            
            
         };
         errCatch(fetchData());
         
     }, 
+    
     []);
-    console.log(artists)
+    console.log(ids);
+    //console.log(recom);
     return (
         <>
       {profile && (
@@ -70,17 +76,23 @@ const Profile = () => {
             </div>
           </StyledHeader>
 
-          {artists && (
+          {artists &&  (
               <main>
                 <SectionWrapper title="Your Top 5 Artists of the Month">
                   <ArtistsGrid artists={artists.items.slice(0, 5)} />
                   
                 </SectionWrapper>
               </main>
+          )
+} 
+            {ids && (
+              <main>
+                <SectionWrapper title="artist ids"></SectionWrapper>
+              </main>
             )
 
             }
-       <Link to="/gmap" ><StyledButton>Mix Your Trip!</StyledButton></Link>
+       <StyledButton>Mix Your Trip!</StyledButton>
         </>
       )}
      
