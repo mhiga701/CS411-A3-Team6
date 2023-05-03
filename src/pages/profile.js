@@ -28,7 +28,13 @@ const Profile = () => {
     const [profile, setProfile] = useState(null);
     const [playlists, setPlaylists] = useState(null);
     const [artists, setArtists] = useState(null);
-    const [ids, setIds] = useState(null);
+    const [id1, setId1] = useState(null);
+    const [id2, setId2] = useState(null);
+    const [id3, setId3] = useState(null);
+    const [id4, setId4] = useState(null);
+    const [id5, setId5] = useState(null);
+    
+    //const [ids, setIds] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             const userProfile = await getProfile();
@@ -39,7 +45,11 @@ const Profile = () => {
 
             const userArtists = await getArtists();
             setArtists(userArtists.data);
-            setIds(userArtists.data.items)
+            setId1(userArtists.data.items[0]['id']);
+            setId2(userArtists.data.items[1]['id']);
+            setId3(userArtists.data.items[2]['id']);
+            setId4(userArtists.data.items[3]['id']);
+            setId5(userArtists.data.items[4]['id']);
             
             
            
@@ -49,8 +59,9 @@ const Profile = () => {
     }, 
     
     []);
-    console.log(ids);
-    //console.log(recom);
+ 
+    const ids = {id1, id2, id3, id4, id5}
+    console.log(ids.id1);
     return (
         <>
       {profile && (
@@ -85,13 +96,15 @@ const Profile = () => {
               </main>
           )
 } 
-            {ids && (
+            {/* {artistIds && (
               <main>
-                <SectionWrapper title="artist ids"></SectionWrapper>
+                <SectionWrapper title="artist ids">
+                  
+                </SectionWrapper>
               </main>
             )
 
-            }
+            } */}
        <StyledButton>Mix Your Trip!</StyledButton>
         </>
       )}

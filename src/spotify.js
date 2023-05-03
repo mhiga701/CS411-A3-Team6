@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { errCatch } from './utils';
 
 
 //const querystring = require('querystring');
@@ -100,6 +102,30 @@ export const getPlaylists = (limit = 20) => {
 
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
+}
+
+export const GetArtistIds = () => {
+    const [id1, setId1] = useState(null);
+    const [id2, setId2] = useState(null);
+    const [id3, setId3] = useState(null);
+    const [id4, setId4] = useState(null);
+    const [id5, setId5] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const userArtists = await getArtists();
+            
+            setId1(userArtists.data.items[0]['id']);
+            setId2(userArtists.data.items[1]['id']);
+            setId3(userArtists.data.items[2]['id']);
+            setId4(userArtists.data.items[3]['id']);
+            setId5(userArtists.data.items[4]['id']);
+        }
+        errCatch(fetchData());
+    },
+    []);
+    
+return {id1, id2, id3, id4, id5};
 }
 
 export function handler(req, res) {
