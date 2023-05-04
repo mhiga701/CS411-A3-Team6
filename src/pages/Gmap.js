@@ -7,7 +7,8 @@ import {
   Select,
   IconButton,
   Input,
-  Text
+  Text,
+  VStack
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import {
@@ -99,7 +100,7 @@ function clearFields() {
       <Box
         position='absolute' 
         borderRadius='lg'
-        m={10}
+        m={2}
         bgColor='whitesmoke'
         shadow='base'
         minW='400px'
@@ -136,23 +137,29 @@ function clearFields() {
           </ButtonGroup>
         </HStack>
 
-        <HStack spacing={8} mt={4} justifyContent='space-between'>
+        <HStack spacing={20} ml={4} mt={6} justifyContent='start'>
       
-            <Box><Text color={'black'} fontSize={18}>Distance: {distance}</Text></Box>
-            <Box><Text color={'black'} fontSize={18}>Duration: {Math.floor(duration/60)} minutes</Text></Box> 
+          <Box><Text color={'black'} fontSize={16}>Distance: {distance}</Text></Box>
+          <Box><Text color={'black'} fontSize={16}>Duration: {Math.floor(duration/60)} minutes</Text></Box> 
          
-          
-          <Button backgroundColor={'green'} color={'white'} type='submit' onClick={handler}>
-              Generate Playlist?
-            </Button>
-          <IconButton
-            backgroundColor={'green'}
-            aria-label='center back'
-            icon={<FaLocationArrow />}
-            isRound
-            onClick={() => map.panTo(center) }/>
+
         </HStack>
       </Box>
+
+      <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={handler}>
+        Generate Playlist!
+      </Button>
+
+      <IconButton
+              position='absolute'
+              justifyContent='center'
+              ml={1100}
+              mt={350}
+              backgroundColor={'green'}
+              aria-label='center back'
+              icon={<FaLocationArrow />}
+              isRound
+              onClick={() => map.panTo(center) }/>
     </Flex>
   
 
