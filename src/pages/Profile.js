@@ -4,7 +4,6 @@ import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
 import styled from 'styled-components/macro';
-import { Link } from "react-router-dom"
 import { HStack } from "@chakra-ui/react";
 //import { handler } from "../spotify";
 
@@ -17,7 +16,7 @@ const StyledButton = styled.a`
   font-weight: 700;
   font-size: var(--fz-lg);
   padding: var(--spacing-sm) var(--spacing-xl);
-  margin-bottom: 20px;
+  //margin-bottom: 20px;
   &:hover,
   &:focus {
     text-decoration: none;
@@ -98,7 +97,7 @@ const Profile = () => {
             )
 
             } */}
-        <HStack>
+        <HStack marginBottom={5}>
         <StyledButton href="/gmap">Mix Your Trip!</StyledButton>
         <StyledButton>Past TripMixes</StyledButton>
         </HStack>

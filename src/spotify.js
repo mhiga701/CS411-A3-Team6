@@ -103,9 +103,12 @@ export const getPlaylists = (limit = 20) => {
     return axios.get(`/me/playlists?limit=${limit}`);
   };
 
+//grabs top artists for the user in the short term time range
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
+
+//grabs recommendations from the spotify api using top 5 artists as seeds
 export const getRecs = (limit=10) => {
     // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
     return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
@@ -158,7 +161,7 @@ export function handler() {
         let playlist_id = resp['id'];
         
 
-      return axios.post(`/me/playlists/${playlist_id}/tracks?position=0&uris=5Tp4UJvnsF4Zd05k0zXUte&5Tp4UJvnsF4Zd05k0zXUte`);
+      return axios.post(`/playlists/${playlist_id}/tracks?position=0&uris=5Tp4UJvnsF4Zd05k0zXUte`);
     };
     return makePlaylist();
     } catch (error) {

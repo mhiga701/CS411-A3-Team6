@@ -124,7 +124,7 @@ function clearFields() {
           </select>
 
           <ButtonGroup>
-            <Button colorScheme={'green'} type='submit' onClick={getDist}>
+            <Button backgroundColor={'green'} type='submit' onClick={getDist}>
               Send It!
             </Button>
             <IconButton
