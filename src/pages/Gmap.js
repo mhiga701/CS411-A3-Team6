@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   Flex,
   HStack,
+  VStack,
   IconButton,
   Input,
   Text
@@ -17,6 +18,7 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
+import { handler } from '../spotify'
 
 const google = window.google = window.google ? window.google : {}
 const center = {lat: 42.3601, lng: -71.0589};
@@ -59,6 +61,9 @@ function App() {
       setDirectionsResponse(results);
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.value);
+
+      const songs = Math.floor(duration / 197); //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
+      
   }
 
 function clearFields() {
@@ -92,14 +97,14 @@ function clearFields() {
           </GoogleMap>
       </Box>
       <Box
-        position='sticky' 
-        //borderRadius='lg'
+        position='absolute' 
+        borderRadius='lg'
         m={10}
-        bgColor='white'
+        bgColor='lightblue'
         shadow='base'
-        //minW='400px'
-        //zIndex='auto'
-        w='50%'
+        minW='400px'
+        zIndex='auto'
+        w='35%'
         h='15%'
       >
         <HStack spacing={4}>
@@ -119,7 +124,7 @@ function clearFields() {
           </select>
 
           <ButtonGroup>
-            <Button colorScheme='green' type='submit' onClick={getDist}>
+            <Button colorScheme={'green'} type='submit' onClick={getDist}>
               Send It!
             </Button>
             <IconButton
@@ -131,8 +136,14 @@ function clearFields() {
         </HStack>
 
         <HStack spacing={4} mt={4} justifyContent='space-between'>
-          <Text>Distance: {distance}</Text>
-          <Text>Duration: {Math.floor(duration/60)} minutes</Text>
+          <VStack>
+            <Text color={'black'} fontSize={18}>Distance: {distance}</Text>
+          <Text color={'black'} fontSize={18}>Duration: {Math.floor(duration/60)} minutes</Text>
+          </VStack>
+          
+          <Button backgroundColor={'green'} color={'white'} type='submit' onClick={handler}>
+              Generate Playlist?
+            </Button>
           <IconButton
             aria-label='center back'
             icon={<FaLocationArrow />}

@@ -97,6 +97,7 @@ axios.defaults.baseURL = 'https://api.spotify.com/v1';
 axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
 axios.defaults.headers['Content-Type'] = 'application/json';
 
+
 export const getProfile = () => axios.get('/me');
 export const getPlaylists = (limit = 20) => {
     return axios.get(`/me/playlists?limit=${limit}`);
@@ -134,36 +135,39 @@ export const getRecs = (limit=10) => {
 // return {id1, id2, id3, id4, id5};
 // }
 
-// export function handler(req, res) {
-//     try {
-//     const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
-//     const makePlaylist = async () => {
-//         const response = await fetch(ENDPOINT, {
-//             method: 'POST',
-//             headers: {
-//                 Authorization: `Bearer ${accessToken}`
-//             },
-//             body: JSON.stringify({
-//                 name: 'Your TripMix!',
-//                 public: 'false',
-//                 collaborative: 'false',
-//                 description: 'A playlist for your upcoming trip!'
+export function handler() {
+    try {
+    const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
+    const makePlaylist = async () => {
+        const response = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                name: 'Your TripMix!',
+                public: 'false',
+                collaborative: 'false',
+                description: 'A playlist for your upcoming trip!'
 
-//             }),
-//         });
+            }),
+        });
 
-//         const resp = await response.json();
+        const resp = await response.json();
+        console.log(resp['id'])
+        let playlist_id = resp['id'];
+        
 
-//       return res.status(200).json(resp);
-//     };
-//     return makePlaylist();
-//     } catch (error) {
-//         console.error("Something went wrong while making your playlist.", error);
-//         return res.status(400);
-//     }
+      return axios.post(`/me/playlists/${playlist_id}/tracks?position=0&uris=5Tp4UJvnsF4Zd05k0zXUte&5Tp4UJvnsF4Zd05k0zXUte`);
+    };
+    return makePlaylist();
+    } catch (error) {
+        console.error("Something went wrong while making your playlist.", error);
+      
+    }
     
 
-// }
+}
 // export function handler2(req, res) {
 //     try {
 //         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;

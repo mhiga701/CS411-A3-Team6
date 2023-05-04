@@ -5,6 +5,7 @@ import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
 import styled from 'styled-components/macro';
 import { Link } from "react-router-dom"
+import { HStack } from "@chakra-ui/react";
 //import { handler } from "../spotify";
 
 
@@ -97,7 +98,11 @@ const Profile = () => {
             )
 
             } */}
-       <Link to='/gmap'><StyledButton>Mix Your Trip!</StyledButton></Link>
+        <HStack>
+        <StyledButton href="/gmap">Mix Your Trip!</StyledButton>
+        <StyledButton>Past TripMixes</StyledButton>
+        </HStack>
+       
         </>
       )}
      
