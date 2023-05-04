@@ -2,6 +2,9 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { errCatch } from './utils';
 import { Ids } from './pages/'
+// import SpotifyWebApi from 'spotify-web-api-js';
+// let spotify = new SpotifyWebApi();
+
 
 
 
@@ -93,6 +96,15 @@ const getAccessToken = () => {
 
 export const accessToken = getAccessToken();
 
+
+
+// spotify.setAccessToken(accessToken);
+
+// spotify.getMyTopArtists(options,function(err, data) {
+
+// })
+
+
 axios.defaults.baseURL = 'https://api.spotify.com/v1';
 axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
 axios.defaults.headers['Content-Type'] = 'application/json';
@@ -108,7 +120,7 @@ export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
 
-//grabs recommendations from the spotify api using top 5 artists as seeds
+// grabs recommendations from the spotify api using top 5 artists as seeds
 export const getRecs = (limit=10) => {
     // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
     return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
@@ -138,39 +150,39 @@ export const getRecs = (limit=10) => {
 // return {id1, id2, id3, id4, id5};
 // }
 
-export function handler() {
-    try {
-    const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
-    const makePlaylist = async () => {
-        const response = await fetch(ENDPOINT, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
-            body: JSON.stringify({
-                name: 'Your TripMix!',
-                public: 'false',
-                collaborative: 'false',
-                description: 'A playlist for your upcoming trip!'
+// export function handler() {
+//     try {
+//     const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
+//     const makePlaylist = async () => {
+//         const response = await fetch(ENDPOINT, {
+//             method: 'POST',
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`
+//             },
+//             body: JSON.stringify({
+//                 name: 'Your TripMix!',
+//                 public: 'false',
+//                 collaborative: 'false',
+//                 description: 'A playlist for your upcoming trip!'
 
-            }),
-        });
+//             }),
+//         });
 
-        const resp = await response.json();
-        console.log(resp['id'])
-        let playlist_id = resp['id'];
+//         const resp = await response.json();
+//         console.log(resp['id'])
+//         let playlist_id = resp['id'];
         
 
-      return axios.post(`/playlists/${playlist_id}/tracks?position=0&uris=5Tp4UJvnsF4Zd05k0zXUte`);
-    };
-    return makePlaylist();
-    } catch (error) {
-        console.error("Something went wrong while making your playlist.", error);
+//       return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
+//     };
+//     return makePlaylist();
+//     } catch (error) {
+//         console.error("Something went wrong while making your playlist.", error);
       
-    }
+//     }
     
 
-}
+// }
 // export function handler2(req, res) {
 //     try {
 //         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;

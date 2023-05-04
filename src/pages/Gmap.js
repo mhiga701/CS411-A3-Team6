@@ -18,7 +18,9 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
-import { handler } from '../spotify'
+import axios from 'axios'
+import { accessToken } from '../spotify'
+
 
 const google = window.google = window.google ? window.google : {}
 const center = {lat: 42.3601, lng: -71.0589};
@@ -48,6 +50,7 @@ function App() {
   if (!isLoaded) {
       return null; //display while loading can change
   }
+  var songs;
   async function getDist() {
       if (originRef.current.value === '' || destRef.current.value === '') {
           return
@@ -62,9 +65,15 @@ function App() {
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.value);
 
-      const songs = Math.floor(duration / 197); //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
-      
+      songs = Math.floor(duration/197); //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
+  //   const getRecs = (limit= Math.floor(duration / 197)) => {
+  //     // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
+  //     return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
+  // }
+      return songs;
   }
+  console.log(songs);
+  
 
 function clearFields() {
   setDirectionsResponse(null);
@@ -72,6 +81,42 @@ function clearFields() {
   setDuration('');
   originRef.current.value = '';
   destRef.current.value = '';
+}
+
+function handler(songs) {
+  console.log(songs);
+  try {
+  const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
+  const makePlaylist = async () => {
+      const response = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: {
+              Authorization: `Bearer ${accessToken}`
+          },
+          body: JSON.stringify({
+              name: 'Your TripMix!',
+              public: 'false',
+              collaborative: 'false',
+              description: 'A playlist for your upcoming trip!'
+
+          }),
+      });
+
+      const resp = await response.json();
+      console.log(resp['id'])
+      let playlist_id = resp['id'];
+
+      const tracks = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
+      console.log(tracks.data);
+      
+
+    return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
+  };
+  return makePlaylist();
+  } catch (error) {
+      console.error("Something went wrong while making your playlist.", error);
+    
+  }
 }
   return (
   
@@ -143,7 +188,7 @@ function clearFields() {
          
           
           <Button backgroundColor={'green'} color={'white'} type='submit' onClick={handler}>
-              Generate Playlist?
+              Generate {Math.floor(duration/197)} Song Playlist?
             </Button>
           <IconButton
             backgroundColor={'green'}
