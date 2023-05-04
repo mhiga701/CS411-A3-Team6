@@ -100,20 +100,20 @@ function clearFields() {
         position='absolute' 
         borderRadius='lg'
         m={10}
-        bgColor='lightblue'
+        bgColor='whitesmoke'
         shadow='base'
         minW='400px'
         zIndex='auto'
-        w='35%'
+        w='50%'
         h='15%'
       >
         <HStack spacing={4}>
           <Autocomplete>
-              <Input type='text' placeholder='Origin' ref={originRef}/>
+              <Input color={'black'} type='text' placeholder='Origin' ref={originRef}/>
           </Autocomplete>
           
           <Autocomplete>
-              <Input type='text' placeholder='Destination' ref={destRef}/>
+              <Input color={'black'} type='text' placeholder='Destination' ref={destRef}/>
           </Autocomplete>
           
           <select id="mode" ref={travRef}>
@@ -128,6 +128,7 @@ function clearFields() {
               Send It!
             </Button>
             <IconButton
+              backgroundColor={'red'}
               aria-label='center back'
               icon={<FaTimes />}
               onClick={clearFields}
@@ -136,15 +137,16 @@ function clearFields() {
         </HStack>
 
         <HStack spacing={4} mt={4} justifyContent='space-between'>
-          <VStack>
+      
             <Text color={'black'} fontSize={18}>Distance: {distance}</Text>
           <Text color={'black'} fontSize={18}>Duration: {Math.floor(duration/60)} minutes</Text>
-          </VStack>
+         
           
           <Button backgroundColor={'green'} color={'white'} type='submit' onClick={handler}>
               Generate Playlist?
             </Button>
           <IconButton
+            backgroundColor={'green'}
             aria-label='center back'
             icon={<FaLocationArrow />}
             isRound
