@@ -4,7 +4,7 @@ import {
   ButtonGroup,
   Flex,
   HStack,
-  VStack,
+  Select,
   IconButton,
   Input,
   Text
@@ -116,12 +116,12 @@ function clearFields() {
               <Input color={'black'} type='text' placeholder='Destination' ref={destRef}/>
           </Autocomplete>
           
-          <select id="mode" ref={travRef}>
+          <Select id="mode" ref={travRef} color={'black'} w={'30%'}>
               <option value="DRIVING">Driving</option>
               <option value="WALKING">Walking</option>
               <option value="BICYCLING">Biking</option>
               <option value="TRANSIT">Public Transport</option>
-          </select>
+          </Select>
 
           <ButtonGroup>
             <Button backgroundColor={'green'} type='submit' onClick={getDist}>
@@ -136,10 +136,10 @@ function clearFields() {
           </ButtonGroup>
         </HStack>
 
-        <HStack spacing={4} mt={4} justifyContent='space-between'>
+        <HStack spacing={8} mt={4} justifyContent='space-between'>
       
-            <Text color={'black'} fontSize={18}>Distance: {distance}</Text>
-          <Text color={'black'} fontSize={18}>Duration: {Math.floor(duration/60)} minutes</Text>
+            <Box><Text color={'black'} fontSize={18}>Distance: {distance}</Text></Box>
+            <Box><Text color={'black'} fontSize={18}>Duration: {Math.floor(duration/60)} minutes</Text></Box> 
          
           
           <Button backgroundColor={'green'} color={'white'} type='submit' onClick={handler}>
