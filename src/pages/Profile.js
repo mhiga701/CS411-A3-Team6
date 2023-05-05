@@ -8,7 +8,7 @@ import { HStack } from "@chakra-ui/react";
 //import { handler } from "../spotify";
 
 
-const StyledButton = styled.a`
+export const StyledButton = styled.a`
   display: inline-block;
   background-color: var(--green);
   color: var(--white);

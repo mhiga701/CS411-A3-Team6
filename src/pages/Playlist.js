@@ -37,25 +37,25 @@ const Playlist = () => (
       <br></br>
       <br></br>
       <br></br>
-      <h1 style={{ color: '#E0E0E0' }}><strong><font size="+7">THANKS FOR USING TRIPMIXER!</font></strong></h1>
+      <h1><strong><font size="+7">THANKS FOR USING TRIPMIXER!</font></strong></h1>
       <br></br>
-      <p style={{ color: '#BDBDBD' }}>
-        Your playlist has been created. Our accuracy is not perfect, so we're sorry if your playlist is a little long.
+      <p>
+        Your playlist has been created. Our accuracy is not perfect, so we're sorry if your playlist is a little short.
       </p> 
-      <p style={{ color: '#9E9E9E' }}>
+      <p>
       Thank you again! Hopefully you'll like at least a few of these songs, and most importantly, enjoy your TRIP!
       </p> 
-      <p style={{ color: '#616161' }}>
+      <p>
         Check out your brand new TripMix on your Spotify account! If you don't see it right away, just sort by 'Recents'.
       </p>
       <br></br>
       <br></br>
-      <p style={{ color: '#424242' }}><small>Or, you can head back to your profile to mix another trip.</small></p>
+      <p><small>Or, you can head back to your profile to mix another trip.</small></p>
       <br></br>
       <br></br>
     </div>
     <HStack>
-    <StyledLoginButton href="https://open.spotify.com/?">
+    <StyledLoginButton target='_blank' href="https://open.spotify.com/?">
       Go to your Spotify
     </StyledLoginButton>
     <StyledLoginButton href="/">

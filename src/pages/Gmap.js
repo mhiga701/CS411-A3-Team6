@@ -1,25 +1,10 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  HStack,
-  Select,
-  IconButton,
-  Input,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Flex, HStack, Select, IconButton, Input, Text } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-} from '@react-google-maps/api'
+import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
 import axios from 'axios'
 import { getArtistsIds, makePlaylist, getTracks } from '../server/spotify'
+import { Link } from 'react-router-dom'
 
 const google = window.google = window.google ? window.google : {}
 const center = {lat: 42.351066015799084, lng: -71.10302128849169}; //map centered at cds
@@ -213,10 +198,12 @@ async function genPlaylist() {
         </HStack>
       </Box>
 
-      <Button  href='/playlist' mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={genPlaylist}>
-        Generate {Math.floor(convert)} Song Playlist!
+      <Link to='/playlist'>
+      <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={genPlaylist}>
+        Generate {convert} Song Playlist!
       </Button>
 
+      </Link>
       <IconButton
               position='absolute'
               justifyContent='center'
