@@ -3,13 +3,15 @@ import styled from 'styled-components/macro';
 const StyledLoginContainer = styled.main`
   display: flex;
   padding: 150px;
-  padding-top: 50px;
+  padding-top: 100px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   color: white;
-  background-color: black;
+  background-image: linear-gradient(black, white);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
 `;
 
 const StyledLoginButton = styled.a`
@@ -19,7 +21,7 @@ const StyledLoginButton = styled.a`
   border-radius: var(--border-radius-pill);
   font-weight: 700;
   font-size: var(--fz-lg);
-  padding: var(--spacing-sm) var(--spacing-xl);
+  padding: var(--spacing-md);
 
   &:hover,
   &:focus {
@@ -31,12 +33,25 @@ const StyledLoginButton = styled.a`
 const Login = () => (
   <StyledLoginContainer>
     <div>
-      <h1 className="title page-title"><big>WELCOME TO TRIPMIXER!</big></h1>
       <br></br>
-      <p>TRIPMIXER is a playlist generator that creates unique Spotify playlists personalized to your travel needs and music taste. You can enter your map details for a perfectly timed playlist with all your favorite artists.</p> 
-      <p>Good music until you reach your destination. Perfect for any kind of trip.</p>
       <br></br>
-      <p><small>Click the button below to get started with TRIPMIXER.</small></p>
+      <br></br>
+      <h1 className="title page-title">WELCOME TO</h1>
+      <h1 style={{ color: '#E0E0E0' }}><strong><font size="+7">TRIPMIXER</font></strong></h1>
+      <br></br>
+      <p style={{ color: '#BDBDBD' }}>
+        TRIPMIXER is a playlist generator that creates unique Spotify playlists personalized to your travel needs and music taste. 
+      </p> 
+      <p style={{ color: '#9E9E9E' }}>
+        You can enter your map details for a perfectly timed playlist with all your favorite artists.
+      </p> 
+      <p style={{ color: '#616161' }}>
+        Good music until you reach your destination. Perfect for any kind of trip.
+      </p>
+      <br></br>
+      <br></br>
+      <p style={{ color: '#424242' }}><small>Click the button below to get started with TRIPMIXER.</small></p>
+      <br></br>
       <br></br>
     </div>
     <StyledLoginButton href="http://localhost:3001/login">

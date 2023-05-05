@@ -46,6 +46,7 @@ function App() {
                 <Routes>
                   <Route path='/' element={<Profile />}></Route>
                   <Route path='/gmap' element={<GoogMap />}></Route>
+                  <Route path='/database'></Route>
                 </Routes>
                 
               </Router>
