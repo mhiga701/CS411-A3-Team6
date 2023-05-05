@@ -8,7 +8,6 @@ import {
   IconButton,
   Input,
   Text,
-  VStack
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import {
@@ -20,7 +19,7 @@ import {
 } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
 import axios from 'axios'
-import { accessToken } from '../spotify'
+import { accessToken, getArtists } from '../spotify'
 
 
 const google = window.google = window.google ? window.google : {}
@@ -37,6 +36,7 @@ function App() {
 
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
+  
 
 
 /** @type React.MutableRefObject<HTMLInputElement> */
@@ -51,7 +51,7 @@ function App() {
   if (!isLoaded) {
       return null; //display while loading can change
   }
-  var songs;
+  //var songs;
   async function getDist() {
       if (originRef.current.value === '' || destRef.current.value === '') {
           return
@@ -66,14 +66,40 @@ function App() {
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.value);
 
-      songs = Math.floor(duration/197); //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
+   // const resp = axios.get(`/recommendations?limit=${(duration.value/197)+1}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
+   //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
   //   const getRecs = (limit= Math.floor(duration / 197)) => {
   //     // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
   //     return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
   // }
-      return songs;
+
+      const songs = Math.floor((results.routes[0].legs[0].duration.value)/197);
+      const topArtistsIds =  getArtists();
+      //console.log((await topArtistsIds));
+      //console.log((await songRecs).data.tracks[0].uri)
+      let i = 0;
+      let j = 0;
+      let uris = [];
+      let ids = []
+      while (j < 5) {
+        ids[j] = (await topArtistsIds).data.items[j].id;
+        j++;
+      }
+      ids = ids.join('%2C');
+      const songRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${ids}`);
+      while (i < songs) {
+        uris[i] = ((await songRecs).data.tracks[i].uri).replaceAll(':', '%3A');
+        i++;
+      }
+     
+      uris = uris.join('%2C');
+      // console.log(uris);
+      // console.log(ids);
+      axios.post(`/playlists/0SFqCFuo4sfS7We2zzmgwD/tracks?uris=${uris}`)
+      return songRecs;
   }
-  console.log(songs);
+
+ // console.log(songs);
   
 
 function clearFields() {
@@ -84,8 +110,7 @@ function clearFields() {
   destRef.current.value = '';
 }
 
-function handler(songs) {
-  console.log(songs);
+function handler() {
   try {
   const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
   const makePlaylist = async () => {
@@ -105,15 +130,14 @@ function handler(songs) {
 
       const resp = await response.json();
       console.log(resp['id'])
-      let playlist_id = resp['id'];
+     // let playlist_id = resp['id'];
 
-      const tracks = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
-      console.log(tracks.data);
+      
       
 
-    return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
+    // return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
   };
-  return makePlaylist();
+ return makePlaylist();
   } catch (error) {
       console.error("Something went wrong while making your playlist.", error);
     
@@ -191,7 +215,7 @@ function handler(songs) {
       </Box>
 
       <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={handler}>
-        Generate Playlist!
+        Generate {Math.floor(duration/197)} Song Playlist!
       </Button>
 
       <IconButton
