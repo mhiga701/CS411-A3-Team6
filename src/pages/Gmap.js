@@ -24,7 +24,8 @@ import { accessToken, getArtists } from '../spotify'
 
 const google = window.google = window.google ? window.google : {}
 const center = {lat: 42.3601, lng: -71.0589};
-
+var convert = 0;
+var playlistId = '';
 function App() {
   const {isLoaded} = useJsApiLoader({
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -66,39 +67,16 @@ function App() {
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.value);
 
+      convert = Math.floor(results.routes[0].legs[0].duration.value/197)
+      return convert;
    // const resp = axios.get(`/recommendations?limit=${(duration.value/197)+1}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
    //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
   //   const getRecs = (limit= Math.floor(duration / 197)) => {
   //     // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
   //     return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
   // }
-
-      const songs = Math.floor((results.routes[0].legs[0].duration.value)/197);
-      const topArtistsIds =  getArtists();
-      //console.log((await topArtistsIds));
-      //console.log((await songRecs).data.tracks[0].uri)
-      let i = 0;
-      let j = 0;
-      let uris = [];
-      let ids = []
-      while (j < 5) {
-        ids[j] = (await topArtistsIds).data.items[j].id;
-        j++;
-      }
-      ids = ids.join('%2C');
-      const songRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${ids}`);
-      while (i < songs) {
-        uris[i] = ((await songRecs).data.tracks[i].uri).replaceAll(':', '%3A');
-        i++;
-      }
+    }
      
-      uris = uris.join('%2C');
-      // console.log(uris);
-      // console.log(ids);
-      axios.post(`/playlists/0SFqCFuo4sfS7We2zzmgwD/tracks?uris=${uris}`)
-      return songRecs;
-  }
-
  // console.log(songs);
   
 
@@ -110,7 +88,7 @@ function clearFields() {
   destRef.current.value = '';
 }
 
-function handler() {
+async function handler() {
   try {
   const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
   const makePlaylist = async () => {
@@ -129,14 +107,42 @@ function handler() {
       });
 
       const resp = await response.json();
-      console.log(resp['id'])
-     // let playlist_id = resp['id'];
-
-      
-      
-
+      playlistId = resp['id'];
+      console.log(playlistId);
+      return playlistId;
+    };
+        console.log(playlistId);
+        const songs = convert;
+        const playlist_id = playlistId;
+        console.log(songs);
+        const topArtistsIds =  getArtists();
+        //console.log((await topArtistsIds));
+        //console.log((await songRecs).data.tracks[0].uri)
+        let i = 0;
+        let j = 0;
+        let uris = [];
+        let ids = []
+        while (j < 5) {
+          ids[j] = (await topArtistsIds).data.items[j].id;
+          j++;
+        }
+        ids = ids.join('%2C');
+        console.log(ids);
+        const songRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${ids}`);
+        console.log((await songRecs).data)
+        while (i < songs) {
+          uris[i] = ((await songRecs).data.tracks[i].uri).replaceAll(':', '%3A');
+          i++;
+        }
+        console.log(uris);
+        uris = uris.join('%2C');
+        // console.log(uris);
+        // console.log(ids);
+        console.log(playlist_id);
+        
     // return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
-  };
+  
+  axios.post(`/${playlist_id}/tracks?uris=${uris}`);
  return makePlaylist();
   } catch (error) {
       console.error("Something went wrong while making your playlist.", error);
