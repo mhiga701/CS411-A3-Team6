@@ -116,23 +116,32 @@ export const getPlaylists = (limit = 20) => {
     return axios.get(`/me/playlists?limit=${limit}`);
   };
 
-// export const makePlaylist = () => {
-//     return axios.post(`/me/playlists?limit=1`);
-// }
-//grabs top artists for the user in the short term time range
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
-
-// grabs recommendations from the spotify api using top 5 artists as seeds
-export const getRecs = (limit=10) => {
-    // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
-    return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
+export const getArtistsIds = async (time_range = 'short_term') => {
+   const topArtistsIds = axios.get(`/me/top/artists?time_range=${time_range}`);
+    let artistIds = []
+    let j = 0;
+        while (j < 5) {
+          artistIds[j] = (await topArtistsIds).data.items[j].id;
+          j++;
+        }
+    artistIds = artistIds.join('%2C');
+    return artistIds;
 }
 
-// var playlistID=''
-// export function handler() {
-//     try {
+export const getTracks = async (time_range = 'short_term') => {
+    const topTrackIds = axios.get(`/me/top/tracks?time_range=${time_range}`);
+    let trackIds = []
+    let k = 0;
+        while (k < 5) {
+          trackIds[k] = (await topTrackIds).data.items[k].id;
+          k++;
+        }
+    trackIds = trackIds.join('%2C');
+    return trackIds;
+}
 export const makePlaylist = async () => {
         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
         const response = await fetch(ENDPOINT, {
@@ -155,11 +164,7 @@ export const makePlaylist = async () => {
         console.log(playlistID)
         return playlistID;
     }
-//     } catch (error) {
-//         console.error("Something went wrong while making your playlist.", error);
-      
-//     }
-//     }
+
 
 
 
