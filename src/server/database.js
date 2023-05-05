@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 const port = 3000;
-const mongoUri = 'http://localhost:27017/';
+const mongoUri = 'mongodb://localhost:27017/';
 const playlist_Id = makePlaylist();
 app.get('/playlists', async (req, res) => {
   try {
@@ -21,7 +21,7 @@ app.get('/playlists', async (req, res) => {
     await client.connect();
     const database = client.db('mydb');
     const playlists = database.collection('playlists');
-    await playlists.insertOne({ playlistId });
+    await playlists.insertOne({ playlist_Id });
 
     res.status(200).send('Playlist stored successfully');
   } catch (error) {
