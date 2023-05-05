@@ -3,7 +3,8 @@ Updated Ideas on the Project:
 1. Scrap the weather api, 2 apis is enough work as is
 2. The spotify api is successfully working, now just need to implement the maps api to get distance between endpoints
 3. Spotify has an upper limit on the length of playlists that the api can generate (100 tracks in a single playlist) **(in a single request)
-did not get around to dealing with large requests, will add later
+did not get around to dealing with large requests, will add later, I think its a simple condition statement to check if numsongs > 100, create a second post request
+This is a good feature for users who want to go on longer road trips tthat exceed the 5-6 hour range. Eventually we want to give users access to their previously made playlists, rendering them onto the page has proven difficult
     3i. Spotify generates playlists by number of tracks and not time, so we will use the average time of a song in seconds as a way to convert the
     length of a user's trip into a rough number of tracks that should be in the playlist
     3ii. The average song length according to 2020 spotify data is 3 min and 17 seconds (197 seconds), giving us a rough upper limit playlist length of 
@@ -15,4 +16,5 @@ did not get around to dealing with large requests, will add later
     4i. Main data to store, saved/frequent locations, past playlists, account info
 
 5. If we have time, implement a mood function for spotify music using the api's data on valence, energy, rhythm, etc. (follow MOOD web app for ideas no source code but still useful)
+    5i. mood functionality was not feasible given the time, instead we split our recommendations between using top 5 artists as seeds and top 5 tracks as seeds, both for the short term time range.
 6. Use Autocomplete function of the maps api to handle error checking on user input for locations, that should cover all user error because the only other input they have is login as of right now
