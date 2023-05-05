@@ -2,7 +2,8 @@ Updated Ideas on the Project:
 
 1. Scrap the weather api, 2 apis is enough work as is
 2. The spotify api is successfully working, now just need to implement the maps api to get distance between endpoints
-3. Spotify has an upper limit on the length of playlists that the api can generate (100 tracks in a single playlist)
+3. Spotify has an upper limit on the length of playlists that the api can generate (100 tracks in a single playlist) **(in a single request)
+did not get around to dealing with large requests, will add later
     3i. Spotify generates playlists by number of tracks and not time, so we will use the average time of a song in seconds as a way to convert the
     length of a user's trip into a rough number of tracks that should be in the playlist
     3ii. The average song length according to 2020 spotify data is 3 min and 17 seconds (197 seconds), giving us a rough upper limit playlist length of 

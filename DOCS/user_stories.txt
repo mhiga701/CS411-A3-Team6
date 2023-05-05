@@ -1,0 +1,49 @@
+User Story 1: General intent
+
+As a Spotify user, I want to be able to auto-generate playlists that fit the mood of my current roadtrip. 
+It would be kind of like playing the radio but with general requests. Most of the time my personal playlists 
+and radio only accomodate my own tastes so I want to be able to mix things up according to the overall mood 
+of the trip and the other passengers. Spotify has a pretty good playlist search, but I find it inadequate sometimes. 
+One reason why Spotify's playlist search doesn't work well for me is because the playlists are usually constrained 
+to a single genre, but I would like all kinds of genres mixed into the playlist. Or, if it is a user-made playlist, 
+it is bound to be too short and in accordance to their personal tastes. Plus, when I type in something along the lines 
+"summer road trip," there are upwards of 30 playlists to choose from and I end up not wanting to pick one. That's why a 
+\generator would come in handy—it's quick, unique, and assorted. To a certain extent, the songs should correspond to the 
+atmosphere of the trip. For example, if it is a cold gloomy day, I don't want a super summery, up beat song. That said, 
+if it is a summer roadtrip, I don't want to listen to anything too somber. 
+
+User Story 2
+
+I am an avid music listener who almost always has Spotify on in the background, but would love to have some sort of playlist 
+creator that does the work for me since I find making a playlist on Spotify to be kind of tedious. I would like it to consider 
+the kinds of music that I currently like by allowing me to log in to my account, but also recommend new genres to me that can
+ be either completely random or based on trends from my personal listening experience. Hopefully, this app will allow me to broaden
+my music taste and discover new artists.
+
+User Story 3
+
+Since I am very in touch with my emotions, I see music as a medium for me to express how I am feeling, or to help me feel what
+ I want to feel. Sometimes, the weather largely can affect my mood both positively and negatively, and I would like my Spotify 
+ playlists to be able to capture such emotions associated with the weather and curate a playlist around it. This could be both 
+ for every day playlists, and for road trips. I would find it especially fun on a road trip to have more upbeat and happy music 
+ playing as we drive to a sunny place, and have more somber, mellow vibes when approaching a more gloomy, rural area. 
+
+User Story 4
+
+As a person who goes on road trips often, I obsess over making the perfect road trip playlist so that there is neither a silent
+ moment nor an ad break. In the past, I have made my own playlists in an attempt to match the given duration of the trip leading 
+ up to the day that I actually drive, but sometimes weather and traffic conditions make my playlist times inaccurate. I think it 
+ would be great if I could input the endpoints of my road trip and the app could generate a playlist for my Spotify account that 
+ would be the exact duration of the trip. An even bigger plus for extra brownie points would be to analyze possible factors that 
+ could delay the trip and queue songs if necessary to keep the vibes high until I have reached my destination.
+
+ User Story 5
+
+As a user, I would like to be able to save the generated playlists under my Spotify account so that I can always come back to it. 
+Once I give the app input, I would imagine that it first generates an appropriate playlist and then links it to my account. If it 
+can't be saved under my Spotify account directly, I would like to be able to create an account on the app that I could easily log 
+into and access those playlists. 
+
+
+
+

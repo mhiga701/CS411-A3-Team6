@@ -1,0 +1,11 @@
+**Project Proposal 1** SELECTED IDEA
+  Generate playlists that are as long as the length of the trip. Songs are added based on current weather and setting (rural/suburban/rural). 
+-MERN Stack used
+-Ended up scrapping the weather  and setting functionality, focus on properly mapping between destinations and getting travel times with different transit modes
+Tentative Roles:
+Max - Backend
+Claire - Frontend
+Jeff - Database
+  
+Project Proposal 2
+  Generate playlist covers for users' personal playlists on Spotify using AI art. 
