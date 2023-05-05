@@ -1,14 +1,5 @@
 import axios from 'axios';
-// import { useState, useEffect } from 'react';
-// import { errCatch } from './utils';
-// import { Ids } from './pages/'
-// import SpotifyWebApi from 'spotify-web-api-js';
-// // let spotify = new SpotifyWebApi();
 
-
-
-
-//const querystring = require('querystring');
 const LOCALSTORAGE_KEYS = {
     accessToken: 'spotify_access_token',
     refreshToken: 'spotify_refresh_token',
@@ -95,14 +86,6 @@ const getAccessToken = () => {
 };
 
 export const accessToken = getAccessToken();
-
-
-
-// spotify.setAccessToken(accessToken);
-
-// spotify.getMyTopArtists(options,function(err, data) {
-
-// })
 
 
 axios.defaults.baseURL = 'https://api.spotify.com/v1';

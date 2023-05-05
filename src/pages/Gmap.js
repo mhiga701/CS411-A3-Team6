@@ -22,8 +22,9 @@ import axios from 'axios'
 import { getArtistsIds, makePlaylist, getTracks } from '../server/spotify'
 
 const google = window.google = window.google ? window.google : {}
-const center = {lat: 42.3601, lng: -71.0589};
+const center = {lat: 42.351066015799084, lng: -71.10302128849169}; //map centered at cds
 
+//global variables to be used when calculating units and songs
 var convert = 0;
 var hours = 0;
 var minutes = 0;
@@ -60,6 +61,7 @@ function App() {
       if (originRef.current.value === '' || destRef.current.value === '') {
           return
       }
+      //call maps,places,distance matrix api to get route and time and distance from user input
       const directionsService = new google.maps.DirectionsService();
       const results = await directionsService.route({
           origin: originRef.current.value,
@@ -69,6 +71,8 @@ function App() {
       setDirectionsResponse(results);
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.value);
+
+      //mathmetical conversions to hours & minutes, google returns time seconds for some reason 
       if (results.routes[0].legs[0].duration.value/3600 < 1) {
          minutes = (Math.floor(results.routes[0].legs[0].duration.value/60));
          units.push(hours, minutes);
@@ -79,13 +83,14 @@ function App() {
         units.push(hours, minutes);
       }
      
-
-      convert = Math.floor(results.routes[0].legs[0].duration.value/197);
+      /*(calculate rough number of songs to span the durationn of the 
+      trip, 197 seconds is average song length according to spotify (2020)*/
+      convert = Math.ceil(results.routes[0].legs[0].duration.value/197);
       units.push(convert);
       return units;
 
     }
-     
+//clears all fields upon hitting the red x
 function clearFields() {
   setDirectionsResponse(null);
   setDistance('');
@@ -94,6 +99,7 @@ function clearFields() {
   destRef.current.value = '';
 }
 
+//generates the playlist using imported api calls + calls recommendations api and posts playlist to account
 async function genPlaylist() {
   try {
 
@@ -109,6 +115,7 @@ async function genPlaylist() {
         const trackIdString = await topTrackIds;
         console.log(trackIdString);
         
+        //make recs more accurate by doing 1 call for top 5 artists and 1 for top 5 songs, max 5 seeds per call 
         const artistRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${artistIdString}`);
         const trackRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_tracks=${trackIdString}`);
         let x = 0;
@@ -125,6 +132,7 @@ async function genPlaylist() {
           y++;
 
         }
+        //parsing and manipulating data to be properly formatted in api calls
         uris1 = uris1.join('%2C');
         uris2 = uris2.join('%2C');
         const uris = uris1 + '%2C' + uris2;
@@ -132,7 +140,6 @@ async function genPlaylist() {
   return axios.post(`playlists/${playlist_id}/tracks?uris=${uris}`);
   } catch (error) {
       console.error("Something went wrong while making your playlist.", error);
-    
   }
 }
   return (
@@ -206,7 +213,7 @@ async function genPlaylist() {
         </HStack>
       </Box>
 
-      <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={genPlaylist}>
+      <Button  href='/playlist' mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={genPlaylist}>
         Generate {Math.floor(convert)} Song Playlist!
       </Button>
 

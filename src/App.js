@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { accessToken, logout } from './server/spotify';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { Login, Profile, GoogMap } from './pages';
+import { Login, Profile, GoogMap, Playlist } from './pages';
 
 import styled from 'styled-components/macro';
 import { GlobalStyle } from './styles';
@@ -46,7 +46,7 @@ function App() {
                 <Routes>
                   <Route path='/' element={<Profile />}></Route>
                   <Route path='/gmap' element={<GoogMap />}></Route>
-                  <Route path='/database'></Route>
+                  <Route path='/playlist' element={<Playlist />}></Route>
                 </Routes>
                 
               </Router>
