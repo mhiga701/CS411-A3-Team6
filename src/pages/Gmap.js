@@ -58,7 +58,7 @@ function App() {
       setDuration(results.routes[0].legs[0].duration.value);
 
       //mathmetical conversions to hours & minutes, google returns time seconds for some reason 
-      if (results.routes[0].legs[0].duration.value/3600 < 1) {
+      if (results.routes[0].legs[0].duration.value / 3600 < 1) {
          minutes = (Math.floor(results.routes[0].legs[0].duration.value/60));
          units.push(hours, minutes);
 
@@ -82,6 +82,7 @@ function clearFields() {
   setDuration('');
   originRef.current.value = '';
   destRef.current.value = '';
+  units = [];
 }
 
 //generates the playlist using imported api calls + calls recommendations api and posts playlist to account
