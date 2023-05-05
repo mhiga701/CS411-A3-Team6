@@ -10,12 +10,7 @@ const mongoUri = 'http://localhost:3000/';
 app.get('/playlist', async (req, res) => {
   try {
     // Retrieve the playlist from Spotify API
-    const playlistId = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.SPOTIFY_ACCESS_TOKEN}`, // replace this bitch
-        'Content-Type': 'application/json',
-      },
-    });
+    const playlistId = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`)
 
     // Store the playlist in MongoDB
     const client = new MongoClient(mongoUri, {
