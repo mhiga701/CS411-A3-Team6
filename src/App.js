@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { accessToken, logout } from './spotify';
+import { accessToken, logout } from './server/spotify';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { Login, Profile, GoogMap } from './pages';

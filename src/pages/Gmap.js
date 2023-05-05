@@ -19,7 +19,7 @@ import {
 } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
 import axios from 'axios'
-import { getArtistsIds, makePlaylist, getTracks } from '../../server/spotify'
+import { getArtistsIds, makePlaylist, getTracks } from '../server/spotify'
 
 const google = window.google = window.google ? window.google : {}
 const center = {lat: 42.3601, lng: -71.0589};

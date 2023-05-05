@@ -1,4 +1,4 @@
-import { getProfile, getPlaylists, getArtists } from "../../server/spotify";
+import { getProfile, getPlaylists, getArtists } from "../server/spotify";
 import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
 import { SectionWrapper, ArtistsGrid } from '../components';
