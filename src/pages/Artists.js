@@ -1,4 +1,4 @@
-import { getArtists } from "../spotify";
+import { getArtists } from "../server/spotify";
 import { useState, useEffect } from 'react';
 import { errCatch } from "../utils";
 

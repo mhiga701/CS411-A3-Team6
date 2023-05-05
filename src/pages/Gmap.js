@@ -19,13 +19,17 @@ import {
 } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
 import axios from 'axios'
-import { accessToken, getArtists } from '../spotify'
-
+import { getArtistsIds, makePlaylist, getTracks } from '../server/spotify'
 
 const google = window.google = window.google ? window.google : {}
-const center = {lat: 42.3601, lng: -71.0589};
+const center = {lat: 42.351066015799084, lng: -71.10302128849169}; //map centered at cds
+
+//global variables to be used when calculating units and songs
 var convert = 0;
-var playlistId = '';
+var hours = 0;
+var minutes = 0;
+var units = [];
+
 function App() {
   const {isLoaded} = useJsApiLoader({
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -57,6 +61,7 @@ function App() {
       if (originRef.current.value === '' || destRef.current.value === '') {
           return
       }
+      //call maps,places,distance matrix api to get route and time and distance from user input
       const directionsService = new google.maps.DirectionsService();
       const results = await directionsService.route({
           origin: originRef.current.value,
@@ -67,19 +72,25 @@ function App() {
       setDistance(results.routes[0].legs[0].distance.text);
       setDuration(results.routes[0].legs[0].duration.value);
 
-      convert = Math.floor(results.routes[0].legs[0].duration.value/197)
-      return convert;
-   // const resp = axios.get(`/recommendations?limit=${(duration.value/197)+1}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
-   //calculate the number of tracks that should be added using 197 seconds (average song length circa 2020)
-  //   const getRecs = (limit= Math.floor(duration / 197)) => {
-  //     // return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=${Ids.ids.id1}%${Ids.ids.id2}%${Ids.ids.id3}%${Ids.ids.id4}%${Ids.ids.id5}`);
-  //     return axios.get(`/recommendations?limit=${limit}&market=US&seed_artists=1ybINI1qPiFbwDXamRtwxD`);
-  // }
-    }
-     
- // console.log(songs);
-  
+      //mathmetical conversions to hours & minutes, google returns time seconds for some reason 
+      if (results.routes[0].legs[0].duration.value/3600 < 1) {
+         minutes = (Math.floor(results.routes[0].legs[0].duration.value/60));
+         units.push(hours, minutes);
 
+      } else {
+        hours = (Math.floor(results.routes[0].legs[0].duration.value / 3600));
+        minutes = (Math.floor(results.routes[0].legs[0].duration.value / 60) % 60);
+        units.push(hours, minutes);
+      }
+     
+      /*(calculate rough number of songs to span the durationn of the 
+      trip, 197 seconds is average song length according to spotify (2020)*/
+      convert = Math.ceil(results.routes[0].legs[0].duration.value/197);
+      units.push(convert);
+      return units;
+
+    }
+//clears all fields upon hitting the red x
 function clearFields() {
   setDirectionsResponse(null);
   setDistance('');
@@ -88,65 +99,47 @@ function clearFields() {
   destRef.current.value = '';
 }
 
-async function handler() {
+//generates the playlist using imported api calls + calls recommendations api and posts playlist to account
+async function genPlaylist() {
   try {
-  const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
-  const makePlaylist = async () => {
-      const response = await fetch(ENDPOINT, {
-          method: 'POST',
-          headers: {
-              Authorization: `Bearer ${accessToken}`
-          },
-          body: JSON.stringify({
-              name: 'Your TripMix!',
-              public: 'false',
-              collaborative: 'false',
-              description: 'A playlist for your upcoming trip!'
 
-          }),
-      });
+        const createEmpty = makePlaylist();
+        const playlist_id = (await createEmpty);
 
-      const resp = await response.json();
-      playlistId = resp['id'];
-      console.log(playlistId);
-      return playlistId;
-    };
-        console.log(playlistId);
-        const songs = convert;
-        const playlist_id = playlistId;
-        console.log(songs);
-        const topArtistsIds =  getArtists();
-        //console.log((await topArtistsIds));
-        //console.log((await songRecs).data.tracks[0].uri)
-        let i = 0;
-        let j = 0;
-        let uris = [];
-        let ids = []
-        while (j < 5) {
-          ids[j] = (await topArtistsIds).data.items[j].id;
-          j++;
-        }
-        ids = ids.join('%2C');
-        console.log(ids);
-        const songRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${ids}`);
-        console.log((await songRecs).data)
-        while (i < songs) {
-          uris[i] = ((await songRecs).data.tracks[i].uri).replaceAll(':', '%3A');
-          i++;
-        }
-        console.log(uris);
-        uris = uris.join('%2C');
-        // console.log(uris);
-        // console.log(ids);
-        console.log(playlist_id);
+        const songs = units[2];
+      
+        const topArtistsIds =  getArtistsIds();
+        const artistIdString = await topArtistsIds;
+
+        const topTrackIds = getTracks();
+        const trackIdString = await topTrackIds;
+        console.log(trackIdString);
         
-    // return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
-  
-  axios.post(`/${playlist_id}/tracks?uris=${uris}`);
- return makePlaylist();
+        //make recs more accurate by doing 1 call for top 5 artists and 1 for top 5 songs, max 5 seeds per call 
+        const artistRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${artistIdString}`);
+        const trackRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_tracks=${trackIdString}`);
+        let x = 0;
+       
+        let uris1 = [];
+        while (x < Math.ceil(songs / 2)) {
+          uris1[x] = ((await artistRecs).data.tracks[x].uri).replaceAll(':', '%3A');
+          x++;
+        }
+        let y = 0;
+        let uris2 = [];
+        while (y < Math.floor(songs / 2)) {
+          uris2[y] = ((await trackRecs).data.tracks[y].uri).replaceAll(':', '%3A');
+          y++;
+
+        }
+        //parsing and manipulating data to be properly formatted in api calls
+        uris1 = uris1.join('%2C');
+        uris2 = uris2.join('%2C');
+        const uris = uris1 + '%2C' + uris2;
+
+  return axios.post(`playlists/${playlist_id}/tracks?uris=${uris}`);
   } catch (error) {
       console.error("Something went wrong while making your playlist.", error);
-    
   }
 }
   return (
@@ -215,13 +208,13 @@ async function handler() {
         <HStack spacing={20} ml={4} mt={6} justifyContent='start'>
       
           <Box><Text color={'black'} fontSize={16}>Distance: {distance}</Text></Box>
-          <Box><Text color={'black'} fontSize={16}>Duration: {Math.floor(duration/60)} minutes</Text></Box> 
+          <Box><Text color={'black'} fontSize={16}>Duration: {units[0]} Hours and {units[1]} minutes</Text></Box> 
          
         </HStack>
       </Box>
 
-      <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={handler}>
-        Generate {Math.floor(duration/197)} Song Playlist!
+      <Button  href='/playlist' mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={genPlaylist}>
+        Generate {Math.floor(convert)} Song Playlist!
       </Button>
 
       <IconButton
