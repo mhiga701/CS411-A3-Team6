@@ -19,13 +19,11 @@ import {
 } from '@react-google-maps/api'
 import { React, useRef, useState } from 'react'
 import axios from 'axios'
-import { accessToken, getArtists } from '../spotify'
-
+import { getArtists, makePlaylist } from '../spotify'
 
 const google = window.google = window.google ? window.google : {}
 const center = {lat: 42.3601, lng: -71.0589};
 var convert = 0;
-var playlistId = '';
 function App() {
   const {isLoaded} = useJsApiLoader({
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -77,9 +75,6 @@ function App() {
   // }
     }
      
- // console.log(songs);
-  
-
 function clearFields() {
   setDirectionsResponse(null);
   setDistance('');
@@ -88,36 +83,13 @@ function clearFields() {
   destRef.current.value = '';
 }
 
-async function handler() {
+async function genPlaylist() {
   try {
-  const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
-  const makePlaylist = async () => {
-      const response = await fetch(ENDPOINT, {
-          method: 'POST',
-          headers: {
-              Authorization: `Bearer ${accessToken}`
-          },
-          body: JSON.stringify({
-              name: 'Your TripMix!',
-              public: 'false',
-              collaborative: 'false',
-              description: 'A playlist for your upcoming trip!'
 
-          }),
-      });
-
-      const resp = await response.json();
-      playlistId = resp['id'];
-      console.log(playlistId);
-      return playlistId;
-    };
-        console.log(playlistId);
+        const createEmpty = makePlaylist();
         const songs = convert;
-        const playlist_id = playlistId;
-        console.log(songs);
+        const playlist_id = (await createEmpty);
         const topArtistsIds =  getArtists();
-        //console.log((await topArtistsIds));
-        //console.log((await songRecs).data.tracks[0].uri)
         let i = 0;
         let j = 0;
         let uris = [];
@@ -138,12 +110,11 @@ async function handler() {
         uris = uris.join('%2C');
         // console.log(uris);
         // console.log(ids);
-        console.log(playlist_id);
+        //console.log(playlist_id);
         
     // return axios.post(`/playlists/${playlist_id}/tracks?uris=spotify%3Atrack%3A1OWGLpptXlHLw1yibeHiHa%2Cspotify%3Atrack%3A6efkcs2aUBMFKxl0cl2JWQ`);
   
-  axios.post(`/${playlist_id}/tracks?uris=${uris}`);
- return makePlaylist();
+  return axios.post(`playlists/${playlist_id}/tracks?uris=${uris}`);
   } catch (error) {
       console.error("Something went wrong while making your playlist.", error);
     
@@ -220,7 +191,7 @@ async function handler() {
         </HStack>
       </Box>
 
-      <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={handler}>
+      <Button mt={675} backgroundColor={'green'} color={'white'} type='submit' fontSize={22} onClick={genPlaylist}>
         Generate {Math.floor(duration/197)} Song Playlist!
       </Button>
 
