@@ -1,3 +1,4 @@
+import { makePlaylist } from './spotify';
 const express = require('express');
 const axios = require('axios');
 const { MongoClient } = require('mongodb');
@@ -6,11 +7,11 @@ require('dotenv').config();
 const app = express();
 const port = 3000;
 const mongoUri = 'http://localhost:27017/';
-
-app.get('/playlist', async (req, res) => {
+const playlist_Id = makePlaylist();
+app.get('/playlists', async (req, res) => {
   try {
     // Retrieve the playlist from Spotify API
-    const playlistId = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`)
+    const playlistId = await axios.get(`https://api.spotify.com/v1/playlists/${playlist_Id}`)
 
     // Store the playlist in MongoDB
     const client = new MongoClient(mongoUri, {

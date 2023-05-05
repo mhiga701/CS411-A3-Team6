@@ -23,7 +23,7 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`)
 });
 
-
+/**AUTHORIZATION CODE BELOW */
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -46,7 +46,7 @@ app.get('/login', (req, res) => {
 
     const state = generateRandomString(16);
     res.cookie(tokenState, state);
-
+//various permissions to perform all necessary changes
     const scope = [
       'user-read-private',
       'user-read-email', 

@@ -88,7 +88,7 @@ function clearFields() {
 //generates the playlist using imported api calls + calls recommendations api and posts playlist to account
 async function genPlaylist() {
   try {
-
+/**Lines 91-101 call functions written in spotify.js to reach various api endpoints */
         const createEmpty = makePlaylist();
         const playlist_id = (await createEmpty);
 
@@ -99,13 +99,14 @@ async function genPlaylist() {
 
         const topTrackIds = getTracks();
         const trackIdString = await topTrackIds;
-        console.log(trackIdString);
+      
         
         //make recs more accurate by doing 1 call for top 5 artists and 1 for top 5 songs, max 5 seeds per call 
         const artistRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_artists=${artistIdString}`);
         const trackRecs = axios.get(`/recommendations?limit=${songs}&market=US&seed_tracks=${trackIdString}`);
         let x = 0;
-       
+       //split the recommendations between ones from artist seeds and track seeds 
+
         let uris1 = [];
         while (x < Math.ceil(songs / 2)) {
           uris1[x] = ((await artistRecs).data.tracks[x].uri).replaceAll(':', '%3A');
@@ -121,6 +122,8 @@ async function genPlaylist() {
         //parsing and manipulating data to be properly formatted in api calls
         uris1 = uris1.join('%2C');
         uris2 = uris2.join('%2C');
+
+        //the uris of all the tracks that will be added using the following post request in line 129
         const uris = uris1 + '%2C' + uris2;
 
   return axios.post(`playlists/${playlist_id}/tracks?uris=${uris}`);
@@ -163,6 +166,7 @@ async function genPlaylist() {
         h='15%'
       >
         <HStack spacing={4}>
+          
           <Autocomplete>
               <Input color={'black'} type='text' placeholder='Origin' ref={originRef}/>
           </Autocomplete>
@@ -216,8 +220,6 @@ async function genPlaylist() {
               isRound
               onClick={() => map.panTo(center) }/>
     </Flex>
-  
-
   )
 }
 

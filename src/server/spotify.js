@@ -87,21 +87,26 @@ const getAccessToken = () => {
 
 export const accessToken = getAccessToken();
 
-
+//******API REQUESTS FOR SPOTIFY */
 axios.defaults.baseURL = 'https://api.spotify.com/v1';
 axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 
-
+//returns user profile
 export const getProfile = () => axios.get('/me');
+
+//returns user's first 20 playlists
 export const getPlaylists = (limit = 20) => {
     return axios.get(`/me/playlists?limit=${limit}`);
   };
 
+//gets user's top artists for the short term, 20 by default, this is to render on the profile page
 export const getArtists = (time_range = 'short_term') => {
     return axios.get(`/me/top/artists?time_range=${time_range}`);
 }
+
+//same request as above but parses and formats data to be used in recommendations request
 export const getArtistsIds = async (time_range = 'short_term') => {
    const topArtistsIds = axios.get(`/me/top/artists?time_range=${time_range}`);
     let artistIds = []
@@ -114,6 +119,7 @@ export const getArtistsIds = async (time_range = 'short_term') => {
     return artistIds;
 }
 
+//similar to getArtistsIds but for user's top tracks in short term
 export const getTracks = async (time_range = 'short_term') => {
     const topTrackIds = axios.get(`/me/top/tracks?time_range=${time_range}`);
     let trackIds = []
@@ -125,6 +131,8 @@ export const getTracks = async (time_range = 'short_term') => {
     trackIds = trackIds.join('%2C');
     return trackIds;
 }
+
+//creates and empty playlist and returns its ID so that it can be passed to the post request to fill the playlist
 export const makePlaylist = async () => {
         const ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=1`;
         const response = await fetch(ENDPOINT, {

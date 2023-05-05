@@ -5,7 +5,7 @@ import { SectionWrapper, ArtistsGrid } from '../components';
 import { StyledHeader } from '../styles';
 import styled from 'styled-components/macro';
 import { HStack } from "@chakra-ui/react";
-//import { handler } from "../spotify";
+
 
 
 export const StyledButton = styled.a`
@@ -25,6 +25,7 @@ export const StyledButton = styled.a`
 `;
 
 const Profile = () => {
+  /**Useeffect hooks to grab necessary data to render the profile page to be similar to spotify itself */
     const [profile, setProfile] = useState(null);
     const [playlists, setPlaylists] = useState(null);
     const [artists, setArtists] = useState(null);
