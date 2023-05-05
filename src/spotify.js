@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { errCatch } from './utils';
 import { Ids } from './pages/'
-// import SpotifyWebApi from 'spotify-web-api-js';
+import SpotifyWebApi from 'spotify-web-api-js';
 // let spotify = new SpotifyWebApi();
 
 
