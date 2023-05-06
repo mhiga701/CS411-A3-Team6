@@ -1,5 +1,7 @@
 TRIPMIXER!
 
+**Inspired by Paul Lamere's 'Roadtrip Mixtape' https://www.spotify.dev/community/showcase/roadtrip-mixtape/**
+
 A curated playlist generator that utilizes the Spotify API and Google Maps API. Enter an origin and destination into the map (with autocomplete) and choose your form of transit (walk, bike, drive, or public transportation). In return, you will get a route for your trip, an estimated duration, and the option to generate a playlist for the length of the trip.
 
 Playlists are curated to each user's short term (roughly the last month) top tracks and artists using the Spotify API's recommendations endpoint.
